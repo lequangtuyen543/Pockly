@@ -10,6 +10,7 @@
 - [x] Viết tài liệu đặc tả API Node.js v1 (`docs/04-api-design.md`).
 - [x] Viết tài liệu cấu trúc giao diện & component tree (`docs/05-ui-structure.md`).
 - [x] Viết tài liệu luồng hệ thống: nhập liệu → lưu → thống kê → cảnh báo (`docs/06-system-flow.md`).
+- [x] Viết AI Agent Knowledge Base (`PROJECT_KNOWLEDGE.md`).
 
 ---
 
