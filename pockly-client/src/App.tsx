@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { MainLayout } from "./components/layouts/MainLayout";
 import { OnboardingFlow } from "./components/onboarding/OnboardingFlow";
+import { EmptyState } from "./components/dashboard/EmptyState";
 import { useAppStore } from "./store/appStore";
 import { useTransactionStore } from "./store/transactionStore";
 import { useBudgetStore } from "./store/budgetStore";
@@ -137,9 +138,7 @@ function App() {
         
         <div className="card-ivory rounded-xl overflow-hidden ring-subtle">
           {transactions.length === 0 ? (
-            <div className="p-xl text-center text-muted-foreground italic">
-              No transactions yet.
-            </div>
+            <EmptyState />
           ) : (
             transactions.slice().reverse().slice(0, 5).map((tx) => (
               <div key={tx.id} className="flex items-center justify-between p-md border-b border-border last:border-0">
