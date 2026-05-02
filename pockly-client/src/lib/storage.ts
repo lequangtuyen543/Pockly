@@ -35,7 +35,16 @@ const STORAGE_KEYS = {
   CATEGORIES: 'pockly_categories',
   BUDGETS: 'pockly_budgets',
   SETTINGS: 'pockly_settings',
+  ONBOARDING: 'pockly_onboarding_completed',
 } as const;
+
+// ... generic storage helpers omitted for brevity if using replace_file_content properly ...
+
+// Onboarding helpers
+export const onboardingStorage = {
+  getIsCompleted: (): boolean => getFromStorage(STORAGE_KEYS.ONBOARDING, false),
+  setCompleted: (value: boolean): void => setToStorage(STORAGE_KEYS.ONBOARDING, value),
+};
 
 // Generic storage helpers
 function getFromStorage<T>(key: string, defaultValue: T): T {

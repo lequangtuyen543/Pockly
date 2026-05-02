@@ -52,18 +52,37 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Pockly colors
+        // Pockly specific colors
         pockly: {
-          green: "#10b981", // emerald-500 for income
-          red: "#ef4444", // red-500 for expenses
-          blue: "#3b82f6", // blue-500 for primary
-          gray: "#6b7280", // gray-500 for neutral
+          terracotta: "#c96442",
+          parchment: "#f5f4ed",
+          ivory: "#faf9f5",
+          ink: "#141413",
+          stone: "#5e5d59",
+          border: "#e8e6dc",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["Newsreader", "Georgia", "serif"],
+      },
+      spacing: {
+        md: "16px",
+        xs: "4px",
+        xl: "40px",
+        gutter: "12px",
+        "margin-mobile": "20px",
+        unit: "4px",
+        sm: "8px",
+        lg: "24px",
+      },
+      boxShadow: {
+        "ring-subtle": "0 0 0 2px rgba(232, 230, 220, 0.5)",
       },
       keyframes: {
         "accordion-down": {
@@ -85,4 +104,3 @@ const config: Config = {
 } satisfies Config;
 
 export default config;
-

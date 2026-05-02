@@ -107,7 +107,7 @@
 ---
 
 ### 6. **UX & Onboarding**
-- [ ] Màn hình onboarding cho người dùng mới (3 bước: chào mừng → đặt budget → thêm giao dịch đầu tiên).
+- [x] Màn hình onboarding cho người dùng mới (3 bước: chào mừng → đặt budget → thêm giao dịch đầu tiên).
 - [ ] Empty state có hướng dẫn khi chưa có giao dịch nào.
 - [ ] Reminder nhắc export CSV sau 30 ngày (localStorage-based).
 - [ ] Format hiển thị tiền tệ nhất quán: `50.000 ₫`.
