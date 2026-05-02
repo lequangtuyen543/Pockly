@@ -28,7 +28,7 @@
 
 ### 3. **Thiết lập Backend (Node.js + Express)**
 - [x] Khởi tạo project Express với TypeScript (`tsconfig.json`, `nodemon`).
-- [ ] Cấu hình cấu trúc thư mục: `routes/`, `controllers/`, `middleware/`, `lib/`.
+- [x] Cấu hình cấu trúc thư mục: `routes/`, `controllers/`, `middleware/`, `lib/`.
 - [ ] Xây dựng các Routes:
   - [ ] `GET/POST /api/transactions` — lấy và tạo giao dịch.
   - [ ] `PUT/DELETE /api/transactions/:id` — sửa và xoá giao dịch.
