@@ -72,12 +72,12 @@
 - [x] Animation feedback sau khi lưu thành công (micro-interaction).
 
 #### 5.2 Danh sách giao dịch
-- [ ] Component `TransactionList`: hiển thị theo ngày, màu xanh/đỏ phân biệt thu/chi.
-- [ ] Component `TransactionItem`: hiển thị danh mục icon, số tiền, ghi chú, thời gian.
-- [ ] Filter theo: ngày / tuần / tháng / danh mục.
-- [ ] Tìm kiếm theo số tiền hoặc ghi chú.
-- [ ] Swipe-to-delete trên mobile hoặc long press menu (Sửa / Xoá).
-- [ ] Confirm dialog khi xoá.
+- [x] Component `TransactionList`: hiển thị theo ngày, màu xanh/đỏ phân biệt thu/chi.
+- [x] Component `TransactionItem`: hiển thị danh mục icon, số tiền, ghi chú, thời gian.
+- [x] Filter theo: ngày / tuần / tháng / danh mục.
+- [x] Tìm kiếm theo số tiền hoặc ghi chú.
+- [x] Swipe-to-delete trên mobile hoặc long press menu (Sửa / Xoá).
+- [x] Confirm dialog khi xoá.
 
 #### 5.3 Dashboard & thống kê
 - [ ] Component `SummaryCards`: tổng thu, tổng chi, số dư trong tháng.
