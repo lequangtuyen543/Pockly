@@ -70,6 +70,20 @@ const config: Config = {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         serif: ["Newsreader", "Georgia", "serif"],
+        "title-sm": ["Newsreader"],
+        "label-caps": ["Inter"],
+        "body-lg": ["Inter"],
+        "display-lg": ["Newsreader"],
+        "headline-md": ["Newsreader"],
+        "body-sm": ["Inter"],
+      },
+      fontSize: {
+        "title-sm": ["20px", { lineHeight: "28px", fontWeight: "500" }],
+        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "400" }],
+        "headline-md": ["28px", { lineHeight: "36px", fontWeight: "400" }],
+        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
       },
       spacing: {
         md: "16px",

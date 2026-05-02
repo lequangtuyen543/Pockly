@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useBudgetStore } from '@/store/budgetStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { formatCurrency } from '@/lib/utils';
 import type { Budget } from '@/lib/storage';
 
 interface BudgetSettingsProps {
@@ -69,19 +70,15 @@ export const BudgetSettings: React.FC<BudgetSettingsProps> = ({ month }) => {
     }));
   };
 
-  const formatCurrency = (value: string) => {
+  const displayCurrency = (value: string) => {
     const num = parseFloat(value);
     if (isNaN(num)) return '';
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(num);
+    return formatCurrency(num);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           ⚙️ Cài đặt ngân sách
         </Button>
@@ -109,7 +106,7 @@ export const BudgetSettings: React.FC<BudgetSettingsProps> = ({ month }) => {
             />
             {totalBudget && (
               <p className="text-sm text-gray-600 mt-1">
-                {formatCurrency(totalBudget)}
+                {displayCurrency(totalBudget)}
               </p>
             )}
           </div>

@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { useBudgetStore } from '@/store/budgetStore';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { formatCurrency } from '@/lib/utils';
 
 interface BudgetProgressProps {
   month?: string; // YYYY-MM format, defaults to current month
@@ -22,14 +23,6 @@ export const BudgetProgress: React.FC<BudgetProgressProps> = ({
   const budgetData = useMemo(() => {
     return getBudgetProgress(currentMonth, transactions);
   }, [currentMonth, transactions, getBudgetProgress]);
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
 
   if (budgetData.total === 0) {
     return (
@@ -103,4 +96,4 @@ export const BudgetProgress: React.FC<BudgetProgressProps> = ({
       )}
     </div>
   );
-};;
+};

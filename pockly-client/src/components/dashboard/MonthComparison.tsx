@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { format, startOfMonth, endOfMonth, subMonths, isWithinInterval } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useTransactionStore } from '@/store/transactionStore';
+import { formatCurrency } from '@/lib/utils';
 
 export const MonthComparison: React.FC = () => {
   const { transactions } = useTransactionStore();
@@ -52,14 +53,6 @@ export const MonthComparison: React.FC = () => {
       },
     ];
   }, [transactions]);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

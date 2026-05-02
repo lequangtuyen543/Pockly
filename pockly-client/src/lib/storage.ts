@@ -36,14 +36,19 @@ const STORAGE_KEYS = {
   BUDGETS: 'pockly_budgets',
   SETTINGS: 'pockly_settings',
   ONBOARDING: 'pockly_onboarding_completed',
+  LAST_EXPORT: 'pockly_last_export_date',
 } as const;
-
-// ... generic storage helpers omitted for brevity if using replace_file_content properly ...
 
 // Onboarding helpers
 export const onboardingStorage = {
   getIsCompleted: (): boolean => getFromStorage(STORAGE_KEYS.ONBOARDING, false),
   setCompleted: (value: boolean): void => setToStorage(STORAGE_KEYS.ONBOARDING, value),
+};
+
+// Export helpers
+export const exportStorage = {
+  getLastDate: (): string | null => getFromStorage(STORAGE_KEYS.LAST_EXPORT, null),
+  setLastDate: (date: string): void => setToStorage(STORAGE_KEYS.LAST_EXPORT, date),
 };
 
 // Generic storage helpers

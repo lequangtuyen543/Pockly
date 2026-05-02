@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
 import { format } from 'date-fns';
+import { exportStorage } from '@/lib/storage';
 
 export const Settings: React.FC = () => {
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
@@ -37,6 +38,9 @@ export const Settings: React.FC = () => {
 
       // Download the file
       downloadCSV(csvContent, `pockly-export-${exportStartDate}-to-${exportEndDate}.csv`);
+
+      // Record export date
+      exportStorage.setLastDate(new Date().toISOString());
 
       setIsExportDialogOpen(false);
       setExportStartDate('');

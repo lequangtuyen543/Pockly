@@ -2,6 +2,7 @@
 import React, { useMemo } from 'react';
 import { startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { useTransactionStore } from '@/store/transactionStore';
+import { formatCurrency } from '@/lib/utils';
 
 export const SummaryCards: React.FC = () => {
   const { transactions } = useTransactionStore();
@@ -30,14 +31,6 @@ export const SummaryCards: React.FC = () => {
       transactionCount: monthTransactions.length,
     };
   }, [transactions]);
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

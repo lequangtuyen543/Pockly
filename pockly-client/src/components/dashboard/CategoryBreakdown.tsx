@@ -4,6 +4,7 @@ import { startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { formatCurrency } from '@/lib/utils';
 
 interface CategoryBreakdownProps {
   period: 'week' | 'month' | '3months';
@@ -58,14 +59,6 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({ period, on
       .sort((a, b) => b.value - a.value)
       .slice(0, 8); // Top 8 categories
   }, [transactions, categories, period]);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {

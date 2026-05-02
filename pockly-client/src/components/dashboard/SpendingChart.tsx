@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { format, startOfDay, endOfDay, eachDayOfInterval, subDays, isWithinInterval } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useTransactionStore } from '@/store/transactionStore';
+import { formatCurrency } from '@/lib/utils';
 
 interface SpendingChartProps {
   period: 'week' | 'month' | '3months';
@@ -55,14 +56,6 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({ period }) => {
       };
     });
   }, [transactions, period]);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

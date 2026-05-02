@@ -5,92 +5,97 @@
 
 @layer base {
   :root {
-    /* 
-      Colors from design system:
-      Background (Parchment): #f5f4ed -> hsl(52, 27%, 95%)
-      Surface (Ivory): #faf9f5 -> hsl(48, 25%, 97%)
-      Brand Accent (Terracotta): #c96442 -> hsl(15, 56%, 52%)
-      Primary Text (Ink): #141413 -> hsl(60, 3%, 8%)
-      Secondary Text (Stone): #5e5d59 -> hsl(48, 3%, 36%)
-      Border/Rule Lines (Beige): #e8e6dc -> hsl(50, 18%, 89%)
+    /*
+      Pockly Editorial Minimalism Design System
+      Background (Parchment): #f5f4ed
+      Surface (Ivory):        #faf9f5
+      Brand (Terracotta):     #c96442
+      On-Surface (Ink):       #231916
+      Secondary (Stone):      #5f5e5a
+      Border (Beige):         #e8e6dc
     */
-    --background: 52 27% 95%;
-    --foreground: 60 3% 8%;
-    
-    --card: 48 25% 97%;
-    --card-foreground: 60 3% 8%;
-    
-    --popover: 48 25% 97%;
-    --popover-foreground: 60 3% 8%;
-    
+    --background: 48 25% 95%;
+    --foreground: 15 22% 11%;
+
+    --card: 48 33% 97%;
+    --card-foreground: 15 22% 11%;
+
+    --popover: 48 33% 97%;
+    --popover-foreground: 15 22% 11%;
+
     --primary: 15 56% 52%;
-    --primary-foreground: 52 27% 95%;
-    
-    --secondary: 48 25% 97%;
-    --secondary-foreground: 60 3% 8%;
-    
-    --muted: 50 18% 89%;
-    --muted-foreground: 48 3% 36%;
-    
-    --accent: 50 18% 89%;
-    --accent-foreground: 60 3% 8%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 52 27% 95%;
-    
-    --border: 50 18% 89%;
-    --input: 50 18% 89%;
+    --primary-foreground: 48 25% 95%;
+
+    --secondary: 45 3% 36%;
+    --secondary-foreground: 48 25% 95%;
+
+    --muted: 45 17% 88%;
+    --muted-foreground: 45 3% 36%;
+
+    --accent: 45 17% 91%;
+    --accent-foreground: 15 22% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 48 25% 95%;
+
+    --border: 45 17% 88%;
+    --input: 45 17% 88%;
     --ring: 15 56% 52%;
-    
-    --radius: 0.75rem; /* 12px for cards */
+
+    --radius: 0.75rem;
   }
 
   .dark {
     --background: 24 11% 10%;
-    --foreground: 52 27% 95%;
+    --foreground: 48 25% 95%;
     --card: 24 11% 12%;
-    --card-foreground: 52 27% 95%;
+    --card-foreground: 48 25% 95%;
     --popover: 24 11% 12%;
-    --popover-foreground: 52 27% 95%;
+    --popover-foreground: 48 25% 95%;
     --primary: 15 65% 60%;
     --primary-foreground: 24 11% 10%;
     --secondary: 24 11% 14%;
-    --secondary-foreground: 52 27% 95%;
+    --secondary-foreground: 48 25% 95%;
     --muted: 24 11% 14%;
-    --muted-foreground: 48 3% 60%;
+    --muted-foreground: 45 3% 60%;
     --accent: 24 11% 14%;
-    --accent-foreground: 52 27% 95%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 52 27% 95%;
-    --border: 24 11% 16%;
-    --input: 24 11% 16%;
+    --accent-foreground: 48 25% 95%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 48 25% 95%;
+    --border: 24 11% 18%;
+    --input: 24 11% 18%;
     --ring: 15 65% 60%;
   }
 
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground font-sans min-h-screen;
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    @apply bg-background text-foreground min-h-screen;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #231916;
+    background-color: #f5f4ed;
   }
 }
 
 @layer utilities {
+  /* Card with ivory/parchment surface */
   .card-ivory {
-    @apply bg-card border border-border;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.03);
+    background-color: #faf9f5;
+    border: 1px solid #e8e6dc;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
   }
+
+  /* Subtle ring */
   .ring-subtle {
     box-shadow: 0 0 0 2px rgba(232, 230, 220, 0.5);
   }
+
+  /* Material Symbols defaults */
   .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  }
-  .material-symbols-outlined-filled {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    font-family: "Material Symbols Outlined";
     font-style: normal;
     font-size: 24px;
     line-height: 1;
@@ -100,6 +105,57 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
+
+  /* Typography utilities matching design tokens */
+  .text-display-lg {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  .text-headline-md {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 400;
+  }
+
+  .text-title-sm {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+  }
+
+  .text-label-caps {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .text-body-lg {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  .text-body-sm {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  /* Color tokens */
+  .text-on-surface { color: #231916; }
+  .text-secondary-token { color: #5f5e5a; }
+  .text-primary-token { color: #c96442; }
+  .text-tertiary-variant { color: #004f50; }
 }
