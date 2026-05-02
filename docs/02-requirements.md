@@ -1,190 +1,484 @@
-# 📋 Yêu Cầu Hệ Thống  
-## Blog Management System
+# 📋 Yêu Cầu Hệ Thống
+
+## Ứng Dụng Quản Lý Thu Chi Cá Nhân (Pockly)
 
 ---
 
 ## 1. Giới Thiệu
 
-Tài liệu này mô tả các yêu cầu chức năng và phi chức năng của Hệ Thống Quản Lý Bài Viết.
+Tài liệu này mô tả chi tiết các yêu cầu chức năng (Functional Requirements) và yêu cầu phi chức năng (Non-Functional Requirements) của Pockly.
 
-Mục tiêu của tài liệu nhằm đảm bảo:
-- Hệ thống được xây dựng đúng mục tiêu
-- Không thiếu chức năng quan trọng
-- Hạn chế thay đổi lớn trong quá trình lập trình
-- Yêu cầu thống nhất với thiết kế cơ sở dữ liệu (MongoDB: `users`, `roles`, `posts`, `categories`, `settings`)
-
----
-
-# 2. Yêu Cầu Chức Năng (Functional Requirements)
-
-## 2.1. Xác Thực Người Dùng (Auth)
-
-### FR-01: Đăng ký tài khoản (Register)
-- Người dùng có thể tạo tài khoản mới.
-- Hệ thống phải kiểm tra `username` và `email` không trùng lặp (unique).
-- Mật khẩu phải được hash bằng **bcrypt** trước khi lưu (không lưu plaintext; không dùng MD5).
-- Tài khoản mới được gán `roleId` tương ứng vai trò mặc định (ví dụ: User).
-
-### FR-02: Đăng nhập (Login)
-- Người dùng có thể đăng nhập bằng `username` và mật khẩu.
-- Chỉ tài khoản `status = active` và không bị loại khỏi sử dụng theo quy tắc nghiệp vụ (xem FR-15 và soft delete) mới đăng nhập được.
-- Nếu thông tin hợp lệ, hệ thống trả về JWT token.
-- Nếu sai thông tin, hiển thị thông báo lỗi phù hợp.
-
-
-### FR-03: Phân quyền (Roles & Permissions)
-- Hệ thống quản lý vai trò qua collection `roles`: mỗi role có `title` (unique), tùy chọn `description`, và mảng `permissions` (ví dụ: `posts_create`, `posts_delete`).
-- Phải hỗ trợ ít nhất hai vai trò nghiệp vụ: **Admin** và **User** (ánh xạ tới bản ghi trong `roles`).
-- Admin có quyền quản lý toàn bộ bài viết và các chức năng quản trị theo `permissions`.
-- User chỉ được quản lý bài viết của chính mình (`posts.userId` trùng với user đăng nhập).
-- Gán vai trò cho user thông qua `users.roleId` (tham chiếu `roles._id`).
+Mục tiêu của tài liệu:
+- Đảm bảo hệ thống được xây dựng đúng mục tiêu
+- Không thiếu tính năng quan trọng
+- Hạn chế thay đổi requirement trong quá trình phát triển
+- Yêu cầu thống nhất với thiết kế dữ liệu (LocalStorage schema + Backend API)
 
 ---
 
-## 2.2. Quản Lý Bài Viết (Posts)
+## 2. Yêu Cầu Chức Năng (Functional Requirements)
 
-### FR-04: Tạo bài viết (Create)
-- Người dùng đã đăng nhập có thể tạo bài viết.
-- Bài viết gồm tối thiểu: `title`, `content` (HTML hoặc Markdown); tùy chọn: `thumbnail` (URL), `categoryId` (tham chiếu `categories._id`).
-- Bài viết được gắn với tác giả qua `userId` (tham chiếu `users._id`).
-- Trạng thái hiển thị theo `status` (`active` | `inactive`, mặc định `active`).
+### 2.1 Quản Lý Giao Dịch (Transactions)
 
-### FR-05: Xem danh sách bài viết (Index)
-- Người dùng và khách có thể xem danh sách bài viết phù hợp chính sách công khai (thường là `deleted = false`, `status = active` — chi tiết hiển thị theo API/thiết kế).
-- Có thể hỗ trợ lọc theo danh mục (`categoryId`), tác giả (`userId`), hoặc tìm kiếm theo tiêu đề.
+#### FR-01: Tạo giao dịch (Create Transaction)
+- Người dùng có thể tạo giao dịch mới (thu hoặc chi).
+- Bắt buộc: `type` (expense/income), `amount` (số tiền), `date` (ngày giao dịch).
+- Tùy chọn: `category` (danh mục), `note` (ghi chú).
+- Hệ thống tự thêm `id` (UUID), `createdAt` (thời gian tạo).
+- Giao dịch được lưu ngay vào **LocalStorage** (không cần API ở MVP).
+- Thực hiện trong ≤ 3 giây, ≤ 3 thao tác.
 
-### FR-06: Xem chi tiết bài viết (Detail)
-- Người dùng có thể xem nội dung đầy đủ của một bài viết (theo quy tắc trạng thái và quyền).
+#### FR-02: Xem danh sách giao dịch (List Transactions)
+- Người dùng có thể xem toàn bộ giao dịch của mình theo thứ tự thời gian ngược (mới nhất trước).
+- Hỗ trợ lọc theo:
+  - **Khoảng thời gian**: ngày / tuần / tháng / tùy chọn
+  - **Loại**: Thu hoặc Chi
+  - **Danh mục**: Lọc theo từng danh mục cụ thể
+- Hỗ trợ tìm kiếm: theo số tiền, ghi chú, hoặc danh mục.
+- Kết quả hiển thị nhanh (< 500ms) ngay cả với 1000+ giao dịch.
 
-### FR-07: Chỉnh sửa bài viết (Edit)
-- User chỉ được chỉnh sửa bài viết có `userId` là chính mình.
-- Admin có thể chỉnh sửa mọi bài viết (theo `permissions`).
-- Cho phép cập nhật các trường theo mô hình dữ liệu: tiêu đề, nội dung, thumbnail, danh mục, trạng thái (trong phạm vi quyền).
+#### FR-03: Xem chi tiết giao dịch (Detail)
+- Người dùng có thể xem đầy đủ thông tin của một giao dịch.
+- Hiển thị: loại, số tiền, danh mục, ghi chú, ngày, thời gian tạo.
 
-### FR-08: Xóa bài viết (Delete)
-- Hệ thống **không xóa vật lý** bản ghi khỏi database.
-- Chỉ đánh dấu soft delete: `posts.deleted = true` (và cập nhật `updatedAt`).
+#### FR-04: Chỉnh sửa giao dịch (Edit)
+- Người dùng có thể sửa bất kỳ trường nào của giao dịch đã tạo.
+- Cập nhật lại `updatedAt` khi chỉnh sửa.
+- Lưu thay đổi ngay vào LocalStorage.
 
----
-
-## 2.3. Quản Lý Danh Mục (Categories)
-
-### FR-09: Quản lý danh mục
-- Admin (hoặc role có `permissions` tương ứng) có thể tạo, xem danh sách, xem chi tiết, cập nhật danh mục.
-- Mỗi danh mục có `title` (bắt buộc), `slug` (bắt buộc, unique, URL-friendly), `status` (`active` | `inactive`).
-- Xóa danh mục theo **soft delete**: `categories.deleted = true`, không xóa vật lý.
-- Bài viết liên kết danh mục qua `posts.categoryId` (bài viết vẫn tồn tại nếu danh mục bị vô hiệu hóa/xóa mềm — xử lý hiển thị theo quy tắc API).
-
----
-
-## 2.4. Cấu Hình Hệ Thống (Settings)
-
-### FR-10: Quản lý cài đặt chung
-- Admin có thể đọc và cập nhật cấu hình dạng key/value (`settings.key`, `settings.value`, `key` unique), ví dụ: tên site, logo, mô tả.
-- Collection `settings` không dùng cờ soft delete theo thiết kế CSDL hiện tại.
+#### FR-05: Xóa giao dịch (Delete)
+- Người dùng có thể xóa giao dịch của mình.
+- **Xóa vật lý** khỏi LocalStorage (không cần soft delete ở MVP).
+- Hiển thị confirm dialog trước khi xóa để tránh xóa nhầm.
+- Hỗ trợ undo hoặc khôi phục trong 5 giây (optional).
 
 ---
 
-## 2.5. Quản Lý Người Dùng (Users)
+### 2.2 Quản Lý Danh Mục (Categories)
 
-### FR-11: Xem danh sách người dùng (Index)
-- Chỉ Admin được phép xem danh sách tất cả người dùng.
-- Danh sách hiển thị các thông tin cơ bản: `username`, `email`, vai trò (qua `roleId` / thông tin role), `status`, có thể kèm `avatar`.
-- Có thể hỗ trợ tìm kiếm theo `email` hoặc `username`.
+#### FR-06: Danh mục mặc định
+- Hệ thống cung cấp danh mục mặc định:
+  - **Chi**: Ăn uống 🍜, Đi lại 🚗, Nhà ở 🏠, Giải trí 🎬, Mua sắm 🛍️, Y tế ⚕️, Học tập 📚, Khác 📌
+  - **Thu**: Lương 💰, Thưởng 🎁, Ngoài kế hoạch 📈, Khác 📌
+- Danh mục mặc định không thể xóa, chỉ có thể ẩn.
 
-### FR-12: Xem chi tiết người dùng (Detail)
-- Admin có thể xem thông tin chi tiết của một người dùng.
-- User có thể xem thông tin cá nhân của chính mình.
+#### FR-07: Thêm danh mục tùy chỉnh (Create Custom Category)
+- Người dùng có thể tạo danh mục mới với:
+  - **Tên** (bắt buộc, ≤ 50 ký tự)
+  - **Icon/Emoji** (tuỳ chọn, mặc định 📌)
+  - **Loại**: Thu hoặc Chi (bắt buộc)
+- Danh mục tùy chỉnh lưu vào LocalStorage, riêng biệt với danh mục mặc định.
 
-### FR-13: Cập nhật thông tin người dùng (Edit)
-- User có thể cập nhật thông tin cá nhân trong phạm vi cho phép (ví dụ: `avatar`, và các trường profile được mở — không tự đổi `roleId`).
-- Admin có thể cập nhật thông tin và gán `roleId` cho người dùng khác.
+#### FR-08: Chỉnh sửa danh mục (Edit Category)
+- Người dùng có thể đổi tên hoặc icon của danh mục tùy chỉnh.
+- Không thể đổi loại (Thu/Chi) sau khi tạo.
 
-### FR-14: Thay đổi mật khẩu (ChangePassword)
-- Người dùng đã đăng nhập có thể thay đổi mật khẩu.
-- Phải xác thực mật khẩu cũ trước khi đổi.
-- Mật khẩu mới phải được hash bằng **bcrypt** trước khi lưu.
+#### FR-09: Ẩn/hiển thị danh mục (Hide/Show)
+- Người dùng có thể ẩn danh mục không dùng.
+- Danh mục ẩn không hiển thị trong dropdown khi nhập giao dịch.
+- Giao dịch cũ của danh mục ẩn vẫn giữ nguyên, nhưng danh mục sẽ hiển thị tên mặc định hoặc "Khác".
 
-### FR-15: Vô hiệu hóa / quản lý trạng thái tài khoản (ChangeStatus)
-- Admin có thể đặt `users.status = inactive` để vô hiệu hóa đăng nhập.
-- Không xóa vật lý dữ liệu user; có thể bổ sung soft delete `users.deleted = true` theo thiết kế CSDL (khi `deleted = true`, bài viết của user vẫn giữ nguyên theo tài liệu thiết kế).
-
----
-
-# 3. Yêu Cầu Phi Chức Năng (Non-Functional Requirements)
-
-## 3.1. Bảo Mật
-- Mật khẩu phải được hash bằng **bcrypt** (có salt), không dùng MD5.
-- API bảo vệ bằng JWT.
-- Các route nhạy cảm phải yêu cầu xác thực và kiểm tra `permissions` / vai trò phù hợp.
-
-## 3.2. Hiệu Năng
-- Thời gian phản hồi API không quá 2 giây trong điều kiện bình thường.
-- Hệ thống phải xử lý tối thiểu 50 người dùng đồng thời (mức mô phỏng).
-
-## 3.3. Khả Năng Mở Rộng
-- Cấu trúc dự án phải rõ ràng, dễ thêm tính năng.
-- Tách riêng controller, model, route.
-- Đặt tên trường tham chiếu nhất quán với CSDL: `userId`, `categoryId`, `roleId` (camelCase).
-
-## 3.4. Khả Năng Bảo Trì
-- Code phải có cấu trúc sạch.
-- Tên biến, hàm rõ ràng.
-- Có xử lý lỗi tập trung.
+#### FR-10: Xóa danh mục tùy chỉnh (Delete)
+- Người dùng có thể xóa danh mục tùy chỉnh **nếu không có giao dịch nào sử dụng**.
+- Nếu có giao dịch sử dụng, hệ thống gợi ý ẩn thay vì xóa.
 
 ---
 
-# 4. Phạm Vi Hệ Thống
+### 2.3 Quản Lý Ngân Sách (Budget)
 
-## 4.1. Bao Gồm
-- CRUD bài viết (soft delete trên `posts`)
-- Đăng ký, đăng nhập (JWT)
-- Phân quyền theo `roles` và `permissions`, gán qua `users.roleId`
-- Quản lý danh mục (`categories`)
-- Cấu hình key/value (`settings`)
-- Quản lý người dùng (danh sách, chi tiết, cập nhật, đổi mật khẩu, trạng thái / soft delete theo thiết kế)
-- Giao diện cơ bản
+#### FR-11: Đặt hạn mức ngân sách tổng tháng (Set Monthly Budget)
+- Người dùng có thể đặt hạn mức chi tiêu **tổng** cho mỗi tháng.
+- Mỗi tháng có một hạn mức riêng (lưu theo year-month key, ví dụ: `2025-06`).
+- Hạn mức có thể được cập nhật hoặc reset bất kỳ lúc nào.
 
-## 4.2. Không Bao Gồm (Giai đoạn hiện tại)
-- Bình luận bài viết (`comments` — mở rộng sau)
-- Thẻ (tags) và quan hệ N-N với bài viết
-- Refresh token lưu collection (có thể bổ sung sau)
-- Upload hình ảnh (thumbnail có thể là URL sẵn có)
-- Hệ thống thông báo
-- Thanh toán
+#### FR-12: Đặt hạn mức theo danh mục (Per-Category Budget)
+- Tùy chọn: người dùng có thể đặt hạn mức **riêng cho từng danh mục**.
+- Nếu đặt hạn mục, tổng hạn mục không được vượt quá hạn mức tổng tháng (gợi ý, không bắt buộc).
 
----
+#### FR-13: Theo dõi tiến độ ngân sách (Budget Progress)
+- Hệ thống tự động tính toán:
+  - **% đã dùng** = (tổng chi tháng) / (hạn mức) × 100
+  - **Số tiền còn lại** = hạn mức - tổng chi tháng
+- Hiển thị progress bar động: xanh (0–79%) → vàng (80–99%) → đỏ (100%+).
+- Tính toán real-time khi có giao dịch mới.
 
-# 5. Giả Định & Ràng Buộc
+#### FR-14: Cảnh báo vượt ngân sách (Budget Alert)
+- Khi giao dịch mới đẩy chi tiêu **≥ 80%** hạn mức:
+  - Hiển thị **banner cảnh báo vàng** ("Sắp vượt ngân sách")
+  - Yêu cầu push notification (với fallback in-app alert)
+- Khi giao dịch mới đẩy chi tiêu **≥ 100%** hạn mức:
+  - Hiển thị **banner cảnh báo đỏ** ("Đã vượt ngân sách")
+  - Push notification + audio feedback (tuỳ chọn)
+- Cảnh báo hiển thị ngay sau khi ghi giao dịch, trước khi quay về danh sách.
 
-## 5.1. Giả Định
-- Người dùng có kết nối internet ổn định.
-- Hệ thống chạy trên môi trường NodeJS.
-
-## 5.2. Ràng Buộc
-- Sử dụng **MongoDB** làm cơ sở dữ liệu; các thực thể chính: `users`, `roles`, `posts`, `categories`, `settings`.
-- Liên kết bằng `ObjectId` (chuỗi khi trao đổi qua API).
-- Soft delete áp dụng cho `users`, `roles`, `posts`, `categories` (không áp dụng cho `settings` theo thiết kế hiện tại).
-- Backend sử dụng ExpressJS.
-- Frontend sử dụng ReactJS.
+#### FR-15: Điều chỉnh ngưỡng cảnh báo (Customize Alert Threshold)
+- Người dùng có thể thay đổi ngưỡng cảnh báo mặc định (80%):
+  - Ví dụ: đặt thành 70%, 90%, hoặc tắt cảnh báo hoàn toàn.
+- Cài đặt này lưu vào LocalStorage `settings`.
 
 ---
 
-# 6. Tiêu Chí Hoàn Thành (Acceptance Criteria)
+### 2.4 Thống Kê & Biểu Đồ (Statistics & Charts)
 
-Hệ thống được xem là hoàn thành khi:
+#### FR-16: Tóm tắt tháng (Monthly Summary)
+- Hiển thị 4 thẻ thông tin chính:
+  - **Tổng thu**: tổng tất cả giao dịch loại `income`
+  - **Tổng chi**: tổng tất cả giao dịch loại `expense`
+  - **Số dư**: tổng thu - tổng chi
+  - **Ngân sách**: hạn mức còn lại (hoặc % đã dùng)
+- Tính toán cho tháng hiện tại hoặc tháng được chọn.
+- Cập nhật real-time khi có giao dịch mới.
 
-- Người dùng có thể đăng ký và đăng nhập thành công; mật khẩu được hash bcrypt.
-- JWT hoạt động chính xác.
-- User không thể chỉnh sửa bài viết của người khác; bài viết gắn đúng `userId`.
-- Admin có thể quản lý toàn bộ bài viết, danh mục, cài đặt hệ thống và người dùng (trong phạm vi FR).
-- CRUD danh mục và đọc/ghi `settings` hoạt động ổn định.
-- Soft delete trên bài viết (và các thực thể có trong thiết kế) hoạt động đúng.
-- Không có lỗi nghiêm trọng trong luồng chính.
+#### FR-17: Biểu đồ chi tiêu theo ngày (Daily Spending Chart)
+- Hiển thị **biểu đồ cột** chi tiêu từng ngày trong khoảng thời gian chọn.
+- Hỗ trợ khoảng thời gian:
+  - **7 ngày gần nhất** (mặc định)
+  - **Toàn tháng**
+  - **Quý** (3 tháng)
+  - **Năm**
+- Trục X: ngày, Trục Y: số tiền (VND).
+- Tap vào cột để xem chi tiết giao dịch của ngày đó.
+
+#### FR-18: Biểu đồ breakdown theo danh mục (Category Breakdown)
+- Hiển thị **biểu đồ tròn hoặc donut** chia chi tiêu theo danh mục.
+- Hiển thị **phần trăm** và **số tiền** cho từng danh mục.
+- Hiển thị danh sách bảng dưới biểu đồ: danh mục | % | số tiền | progress bar.
+- Tap vào danh mục để lọc danh sách giao dịch của danh mục đó.
+
+#### FR-19: So sánh tháng (Month-over-Month Comparison)
+- Hiển thị **mini bar chart** so sánh tổng chi tháng này vs tháng trước.
+- Hiển thị % tăng/giảm (ví dụ: "+15%" hoặc "-8%").
+- Tap để xem chi tiết trend hàng tháng (optional).
+
+#### FR-20: Chuyển đổi khoảng thời gian (Time Range Toggle)
+- Giao diện có tab hoặc dropdown chuyển đổi giữa:
+  - Hôm nay, Tuần này, Tháng này, Quý, Năm, Tùy chọn (date picker)
+- Tất cả biểu đồ và summary cập nhật khi thay đổi khoảng thời gian.
 
 ---
 
-Tác giả: [Lê Quang Tuyến]  
-Phiên bản: 1.1  
-Trạng thái: Giai đoạn phân tích & thiết kế  
-Cập nhật: đồng bộ với `03-database-design.md`
+### 2.5 Xuất Dữ Liệu (Data Export)
+
+#### FR-21: Xuất CSV
+- Người dùng có thể xuất toàn bộ giao dịch hoặc lọc theo khoảng thời gian.
+- Format CSV: `Ngày, Loại, Danh mục, Số tiền, Ghi chú`
+- Ví dụ:
+  ```csv
+  2025-06-15,Chi,Ăn uống,50000,Phở sáng
+  2025-06-15,Thu,Lương,10000000,Lương tháng 6
+  ```
+- Encoding UTF-8 (hỗ trợ tiếng Việt).
+- Tên file: `pockly-export-YYYY-MM-DD.csv`.
+- Download phía client, không cần server.
+
+#### FR-22: Backup dữ liệu
+- Gợi ý export CSV định kỳ (ví dụ: mỗi 30 ngày).
+- Reminder notification: "Bạn chưa backup 30 ngày rồi, hãy xuất CSV".
+- Cho phép người dùng hoãn lại reminder.
+
+---
+
+### 2.6 Cài Đặt & Tuỳ Chỉnh (Settings)
+
+#### FR-23: Thông tin cá nhân (User Profile)
+- Người dùng có thể xem và cập nhật thông tin cá nhân:
+  - **Tên hiển thị** (optional)
+  - **Email** (hiển thị, không có tùy chọn đổi ở MVP)
+  - **Avatar** (URL, tuỳ chọn)
+  - **Mata khẩu** (xem FR-24)
+- Lưu vào LocalStorage.
+
+#### FR-24: Đổi mật khẩu (Change Password)
+- Người dùng có thể thay đổi mật khẩu.
+- Yêu cầu:
+  - **Mật khẩu cũ** (xác thực)
+  - **Mật khẩu mới** (≥ 6 ký tự)
+  - **Xác nhận mật khẩu mới**
+- Nếu mật khẩu cũ sai, hiển thị lỗi.
+- Nếu thành công, yêu cầu đăng nhập lại (optional).
+
+> **Note:** Ở MVP, không có hash mật khẩu (lưu plaintext). Ở v1.1+, integrate Backend + bcrypt.
+
+#### FR-25: Cài đặt chung (App Settings)
+- Người dùng có thể tuỳ chỉnh:
+  - **Tiền tệ**: VND (mặc định, v1.1+ hỗ trợ USD, EUR, etc.)
+  - **Định dạng hiển thị tiền**: `50.000 ₫` (mặc định)
+  - **Ngôn ngữ**: Tiếng Việt (mặc định), English (optional)
+  - **Thông báo**: bật/tắt push notification, cảnh báo
+  - **Ngưỡng cảnh báo**: 80% (mặc định), tuỳ chỉnh
+  - **Dark mode**: bật/tắt (v1.1+)
+- Lưu vào LocalStorage `settings`.
+
+#### FR-26: Quản lý dữ liệu (Data Management)
+- Nút **"Xoá tất cả dữ liệu"**: xoá toàn bộ giao dịch, danh mục, ngân sách (confirm dialog).
+- Nút **"Import từ CSV"**: cho phép tải file CSV và import giao dịch (v1.1+, optional).
+- Nút **"Export toàn bộ"**: export settings, categories, transactions (JSON format, optional).
+
+---
+
+## 3. Yêu Cầu Phi Chức Năng (Non-Functional Requirements)
+
+### 3.1 Hiệu Năng (Performance)
+
+#### NFR-01: Tốc độ ghi giao dịch
+- Thời gian từ bấm submit đến lưu xong: **≤ 3 giây** (điều kiện bình thường).
+- Animation feedback: ≤ 500ms.
+
+#### NFR-02: Tốc độ load
+- Load lần đầu (cold start): **< 2 giây** (trên mạng 4G).
+- Chuyển tab/trang: **< 500ms**.
+- Danh sách 1000+ giao dịch: scroll mượt không lag.
+
+#### NFR-03: Lighthouse Score
+- **Performance**: ≥ 90
+- **Accessibility**: ≥ 85
+- **Best Practices**: ≥ 90
+- **SEO**: ≥ 85 (nếu có trang landing)
+
+#### NFR-04: Kích thước bundle
+- Bundle chính: < 150 KB (gzipped)
+- Tối ưu được Tree-shaking, code-splitting cho các tính năng optional
+
+---
+
+### 3.2 Khả Dụng (Availability)
+
+#### NFR-05: Offline-first
+- Ứng dụng hoạt động **100% offline** mà không cần internet.
+- Tất cả dữ liệu được lưu LocalStorage.
+- Khi có kết nối, có thể sync với backend (v1.1+).
+
+#### NFR-06: Dung lượng lưu trữ
+- Hỗ trợ tối thiểu **10.000 giao dịch** (~3–4 MB LocalStorage).
+- LocalStorage hạn chế ~5–10 MB (browser-dependent), đủ cho MVP.
+- Khi gần đầy, gợi ý export / upgrade v1.1 cloud sync.
+
+#### NFR-07: Data Persistence
+- Dữ liệu không bị xoá tự động khi refresh trang (trừ khi user clear browser data).
+- Nhắc user export CSV định kỳ để backup.
+
+---
+
+### 3.3 Bảo Mật (Security)
+
+#### NFR-08: Lưu trữ mật khẩu
+- **MVP**: Lưu plaintext LocalStorage (demo only, không dùng trong production).
+- **v1.1+**: Hash bcrypt trên backend, không lưu plaintext.
+
+#### NFR-09: Dữ liệu cá nhân
+- Tất cả dữ liệu lưu **LOCAL** (không gửi lên server ở MVP).
+- Khi đăng nhập (v1.1+), sử dụng HTTPS + JWT.
+
+#### NFR-10: Validate input
+- Validate client-side: số tiền ≥ 0, danh mục valid, ghi chú ≤ 500 ký tự.
+- Gợi ý số tiền: tối thiểu 1.000 VND.
+
+---
+
+### 3.4 Usability (Khả Năng Sử Dụng)
+
+#### NFR-11: Mobile-first
+- Giao diện tối ưu cho mobile **375px–414px** (focus iPhone SE, iPhone 14, Android).
+- Desktop view (> 768px) được responsive nhưng không phải ưu tiên.
+- Touch targets ≥ 44x44px (WCAG).
+
+#### NFR-12: Accessibility
+- Hỗ trợ screen reader (ARIA labels, semantic HTML).
+- Contrast tối thiểu 4.5:1 (WCAG AA).
+- Hỗ trợ keyboard navigation.
+
+#### NFR-13: Responsiveness
+- Danh sách giao dịch scroll mượt kể cả 1000+ bản ghi.
+- Biểu đồ responsive, không overflow.
+- Form input tự động focus bàn phím số trên mobile.
+
+#### NFR-14: UX Consistency
+- Sử dụng **Claude Design System** (shadcn/ui + Tailwind).
+- Màu sắc nhất quán: xanh (thu), đỏ (chi), xám (trung tính).
+- Font: system-ui hoặc Inter.
+- Spacing: 8px grid, 16px padding.
+
+---
+
+### 3.5 Maintainability (Khả Năng Bảo Trì)
+
+#### NFR-15: Code structure
+- Tách riêng: component, store (Zustand), lib (helpers), types (TypeScript).
+- Tên file & hàm rõ ràng, dễ hiểu.
+- Component reusable, không duplicate.
+
+#### NFR-16: Error handling
+- Catch lỗi tập trung (error boundary, try-catch).
+- Hiển thị thông báo lỗi user-friendly.
+- Ghi log errors (console ở MVP, cloud ở v1.1+).
+
+#### NFR-17: Documentation
+- README hướng dẫn cài đặt & sử dụng.
+- Inline comments cho logic phức tạp.
+- Commit messages theo convention (feat, fix, docs, etc.).
+
+---
+
+### 3.6 Compatibility (Tương Thích)
+
+#### NFR-18: Browser support
+- **iOS Safari**: 14.x trở lên
+- **Android Chrome**: 100+ (hoặc 90+ với fallback)
+- **Desktop**: Chrome, Firefox, Safari, Edge (mới nhất)
+
+#### NFR-19: OS support
+- **iOS**: 14+
+- **Android**: 10+ (API 29+)
+- **Desktop**: Windows 10+, macOS 10.14+, Linux (modern)
+
+---
+
+## 4. Phạm Vi Dự Án
+
+### 4.1 Bao Gồm (MVP v1.0)
+
+✅ **Nhập liệu:**
+- Tạo/sửa/xoá giao dịch
+- Nhập nhanh < 3 giây, ≤ 3 thao tác
+
+✅ **Quản lý danh mục:**
+- Danh mục mặc định có sẵn
+- Thêm/sửa/ẩn danh mục tùy chỉnh
+
+✅ **Ngân sách:**
+- Đặt hạn mức tháng
+- Cảnh báo khi vượt 80% / 100%
+
+✅ **Thống kê:**
+- Summary tháng (thu, chi, số dư)
+- Biểu đồ cột, tròn, so sánh tháng
+- Lọc theo khoảng thời gian
+
+✅ **Xuất dữ liệu:**
+- Export CSV
+
+✅ **Cài đặt:**
+- Tuỳ chỉnh ngưỡng cảnh báo
+- Tuỳ chỉnh format tiền tệ
+- Đổi mật khẩu (plaintext MVP)
+
+✅ **UX:**
+- Mobile-first (375px–414px)
+- Offline-first, LocalStorage 100%
+- Responsive, accessible
+
+### 4.2 Chưa Bao Gồm (v1.1+)
+
+❌ Đăng nhập / account sync  
+❌ Nhập tự động từ SMS / API ngân hàng  
+❌ Quản lý nhiều ví / tài khoản  
+❌ Lập kế hoạch tiết kiệm  
+❌ Chia sẻ dữ liệu  
+❌ Multi-currency (chỉ VND)  
+❌ Dark mode  
+❌ Mobile app native  
+❌ Bình luận / ghi chú chi tiết  
+❌ Hình ảnh / receipt scanning  
+
+---
+
+## 5. Giả Định & Ràng Buộc
+
+### 5.1 Giả Định
+
+- Người dùng có trình duyệt hiện đại (Chrome, Safari, Firefox).
+- Người dùng có kết nối internet ít nhất lần đầu tiên (download app).
+- Người dùng không clear browser data thường xuyên.
+- Dữ liệu lưu LocalStorage không bị mất vì thiếu storage space.
+
+### 5.2 Ràng Buộc
+
+- **Frontend:**
+  - React 18+ (TypeScript)
+  - Vite (build tool)
+  - Tailwind CSS + shadcn/ui (UI library)
+  - Zustand (state management)
+  - Recharts (charts)
+  - date-fns (datetime)
+  - LocalStorage API (data storage)
+
+- **Backend (Chuẩn bị):**
+  - Node.js + Express
+  - TypeScript
+  - MongoDB (v1.1+)
+
+- **Data Storage:**
+  - LocalStorage (MVP) — ~5–10 MB max
+  - Backend (v1.1+) — MongoDB
+
+- **Deployment:**
+  - Frontend: Vercel (CI/CD tự động)
+  - Backend: Railway / Render / Heroku (v1.1+)
+
+---
+
+## 6. Tiêu Chí Hoàn Thành (Acceptance Criteria)
+
+Hệ thống **MVP v1.0** được xem là hoàn thành khi:
+
+✅ Người dùng có thể ghi giao dịch trong ≤ 3 giây, ≤ 3 thao tác  
+✅ LocalStorage lưu & đọc dữ liệu chính xác, không mất dữ liệu  
+✅ Danh sách giao dịch lọc, tìm kiếm hoạt động chính xác  
+✅ Biểu đồ thống kê tính toán & render đúng  
+✅ Cảnh báo ngân sách trigger tại đúng ngưỡng (80%, 100%)  
+✅ Export CSV có format đúng, encoding UTF-8  
+✅ Giao diện responsive trên mobile (375px–414px)  
+✅ Offline hoạt động 100% mà không lỗi  
+✅ Lighthouse: Performance ≥ 90, Accessibility ≥ 85  
+✅ Không có lỗi console, warning cảnh báo tối thiểu  
+✅ Danh mục custom lưu & hiển thị đúng  
+✅ Cài đặt (ngưỡng, format tiền tệ) áp dụng đúng  
+
+---
+
+## 7. Dependencies & Libraries
+
+### Frontend
+
+| Library | Version | Mục đích |
+|---------|---------|---------|
+| React | 18+ | UI framework |
+| React Router | 6+ | Client routing |
+| Zustand | 4+ | State management |
+| Tailwind CSS | 3+ | Styling |
+| shadcn/ui | Latest | Component library |
+| Recharts | 2+ | Charts |
+| date-fns | 3+ | Date utilities |
+| uuid | 9+ | ID generation |
+| clsx | 2+ | Conditional classNames |
+
+### Development
+
+| Tool | Mục đích |
+|------|---------|
+| Vite | Build & dev server |
+| TypeScript | Type safety |
+| ESLint | Code quality |
+| Prettier | Code formatting |
+| Vitest (optional) | Unit testing |
+
+---
+
+## 8. Tham Chiếu
+
+- [01-project-overview.md](./01-project-overview.md) — Tổng quan dự án
+- [prd.md](../prd.md) — Product Requirements Document
+- [TODO.md](../TODO.md) — Kế hoạch phát triển
+- [02-data-design.md](./02-data-design.md) — Thiết kế dữ liệu LocalStorage
+- [03-api-design.md](./03-api-design.md) — API endpoints (v1.1+)
+
+---
+
+**Tác giả:** [Your Name]  
+**Phiên bản:** 1.0  
+**Trạng thái:** Giai đoạn phân tích & thiết kế  
+**Cập nhật lần cuối:** 2025-06-15  
+
+---
+
+*Tài liệu này sẽ được cập nhật khi có thay đổi requirement. Mọi thay đổi phải được phê duyệt trước khi implement.*
