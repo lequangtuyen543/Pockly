@@ -7,7 +7,7 @@
 - [x] Viết tài liệu tổng quan (`docs/01-project-overview.md`).
 - [x] Viết tài liệu yêu cầu (`docs/02-requirements.md`).
 - [x] Viết tài liệu thiết kế database & LocalStorage schema (`docs/03-data-design.md`).
-- [ ] Viết tài liệu đặc tả API Node.js v1 (`docs/04-api-design.md`).
+- [x] Viết tài liệu đặc tả API Node.js v1 (`docs/04-api-design.md`).
 - [ ] Viết tài liệu cấu trúc giao diện & component tree (`docs/05-ui-structure.md`).
 - [ ] Viết tài liệu luồng hệ thống: nhập liệu → lưu → thống kê → cảnh báo (`docs/06-system-flow.md`).
 

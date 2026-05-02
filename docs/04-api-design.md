@@ -1,540 +1,487 @@
-# 🔌 Thiết Kế API  
-## Blog Management System
+# 🔌 Thiết Kế API
+
+## Pockly — Personal Finance Management
 
 ---
 
 # 1. Tổng Quan
 
-Hệ thống sử dụng RESTful API với chuẩn JSON.  
-Tất cả endpoint được đặt tiền tố:
+Hệ thống sử dụng **RESTful API + JSON**.
 
+Base URL:
+
+```
 /api/v1
-
-Dữ liệu trả về theo format:
-
-{
-  code: Int,
-  message: String,
-  data: Array || Object || null
-}
-
-Các route yêu cầu xác thực sẽ sử dụng JWT trong header:
-
-Authorization: Bearer <token>
-
----
-
-# 2. Authentication APIs
-
-## 2.1. Đăng Ký
-
-POST /api/v1/auth/register
-
-Request Body:
-{
-  username: String,
-  email: String,
-  password: String
-}
-
-👉 Backend xử lý:
-
-hash password (bcrypt)
-set:
-```
-roleId = defaultRoleUser
-status = "active"
-deleted = false
 ```
 
-Response (Success):
-{
-  code: 200,
-  message: "Đăng ký thành công",
-  data: null
-}
+Response format:
 
----
-
-## 2.2. Đăng Nhập
-
-POST /api/v1/auth/login
-
-Request Body:
-{
-  username: String, // hoặc email
-  password: String
-}
-
-Response (Success):
-{
-  code: 200,
-  message: "Đăng nhập thành công",
-  data: {
-    token: String
-  }
-}
-
----
-
-# 3. User APIs
-
-## 3.1. Lấy Danh Sách Người Dùng (Admin)
-
-GET /api/v1/users
-
-Auth: Required (Admin)
-
-Query Params (optional):
-- keyword (search theo username hoặc email)
-
-filter thêm deleted: false
-search đúng field
-
-```
-{
-  $or: [
-    { username: /keyword/i },
-    { email: /keyword/i }
-  ],
-  deleted: false
-}
-```
-
-Response:
+```json
 {
   "code": 200,
   "message": "Success",
-  "data": [...],
-  "pagination": {
-    "currentPage": 1,
-    "limitItems": 5,
-    "totalItems": 23,
-    "totalPages": 5
-  }
+  "data": Object || Array || null
 }
+```
 
 ---
 
-## 3.2. Lấy Thông Tin Cá Nhân
+## Auth (v1.1+)
 
-GET /api/v1/users/info
+Sử dụng JWT:
 
-Auth: Required
-
-Response:
-{
-  code: 200,
-  data: UserInfo
-}
+```
+Authorization: Bearer <token>
+```
 
 ---
 
-## 3.3. Cập Nhật Người Dùng
+## MVP v1.0
 
-PATCH /api/v1/users/edit/:id
+⚠️ **Không dùng API**
+→ Toàn bộ logic chạy trên **LocalStorage**
 
-Auth: Required
-
-Request Body:
-{
-  "username": "string",
-  "avatar": "string",
-  "roleId": "string",   // admin only
-  "status": "active"      // admin only
-}
-
-Response:
-{
-  code: 200,
-  message: "Cập nhật thành công",
-  data: User
-}
+API này dùng cho **v1.1+ (có backend + sync)**
 
 ---
 
-## 3.4. Đổi Mật Khẩu
+# 2. Transactions APIs
 
-PATCH /api/v1/users/change-password
+## 2.1. Tạo giao dịch
+
+POST /api/v1/transactions
 
 Auth: Required
 
 Request Body:
+
+```json
 {
-  oldPassword: String,
-  newPassword: String
+  "clientId": "uuid-v4",
+  "type": "expense",
+  "amount": 50000,
+  "categoryId": "string",
+  "categoryName": "Ăn uống",
+  "note": "Phở sáng",
+  "transactionDate": "2025-06-15T08:30:00Z"
 }
+```
 
----
+👉 Backend xử lý:
 
-# 4. Post APIs
-
-## 4.1. Tạo Bài Viết
-
-POST /api/v1/posts/create
-
-Auth: Required
-
-Request Body:
-{
-  "title": "string",
-  "content": "string",
-  "thumbnail": "string",
-  "categoryId": "ObjectId"
-}
-
-👉 Backend tự set:
 ```
 userId = req.user.id
-status = "active"
-deleted = false
+createdAt = now
+updatedAt = now
+deletedAt = null
 ```
-
----
-
-## 4.2. Lấy Danh Sách Bài Viết
-
-GET /api/v1/posts
-
-Auth: Optional
-
-Find: 
-{
-  deleted: false,
-  status: "active"
-}
-
-Query Params (optional): /api/v1/posts?keyword=react&categoryId=...&page=1&limit=5
-
-| Param      | Kiểu   | Mô tả                |
-| ---------- | ------ | -------------------- |
-| keyword    | String | search theo title    |
-| sortKey    | String | title, createdAt     |
-| sortValue  | String | asc / desc           |
-| page       | Number | mặc định 1           |
-| limit      | Number | mặc định 5           |
-
-👉 Thêm filter category:
-if (categoryId) filter.categoryId = categoryId
-
-Chỉ trả về bài viết có deleted = false.
 
 Response:
+
+```json
 {
-  "code": 200,
-  "message": "Success",
-  "data": [Post],
-  "pagination": {
-    "currentPage": 1,
-    "limitItems": 5,
-    "totalItems": 23,
-    "totalPages": 5
-  }
-}
-
----
-
-## 4.3. Lấy Chi Tiết Bài Viết
-
-GET /api/v1/posts/detail/:id
-
-Auth: Optional
-
-Populate đúng theo DB:
-```
-Post.findById(id)
-  .populate("userId", "username")
-  .populate("categoryId", "title")
-```
-
-Response: 
-```
-{
-  "_id": "...",
-  "title": "...",
-  "content": "...",
-  "status": "active",
-
-  "user": {
-    "_id": "...",
-    "username": "..."
-  },
-
-  "category": {
-    "_id": "...",
-    "title": "..."
+  "code": 201,
+  "message": "Tạo giao dịch thành công",
+  "data": {
+    "id": "serverId",
+    "clientId": "uuid-v4"
   }
 }
 ```
 
 ---
 
-## 4.4. Cập Nhật Bài Viết
+## 2.2. Lấy danh sách giao dịch
 
-PATCH /api/v1/posts/edit/:id
+GET /api/v1/transactions
 
 Auth: Required
 
-- User chỉ cập nhật bài của mình
-- Admin cập nhật mọi bài
+Query Params:
 
-Logic:
-```
+| Param      | Kiểu   | Mô tả             |
+| ---------- | ------ | ----------------- |
+| fromDate   | String | ISO date          |
+| toDate     | String | ISO date          |
+| type       | String | expense / income  |
+| categoryId | String | lọc theo danh mục |
+| keyword    | String | search note       |
+| page       | Number | default = 1       |
+| limit      | Number | default = 20      |
+
+Filter:
+
+```javascript
 {
-  deleted: true,
-  updatedAt: new Date()
+  userId: req.user.id,
+  deletedAt: null
 }
 ```
 
-Response: 
+Response:
+
+```json
 {
-  "title": "string",
-  "content": "string",
-  "thumbnail": "string",
-  "categoryId": "ObjectId",
-  "status": "active" // admin only
+  "code": 200,
+  "message": "Success",
+  "data": [Transaction],
+  "pagination": {
+    "currentPage": 1,
+    "limitItems": 20,
+    "totalItems": 120,
+    "totalPages": 6
+  }
 }
+```
 
 ---
 
-## 4.5. Xóa Bài Viết (Soft Delete)
+## 2.3. Lấy chi tiết giao dịch
 
-DELETE /api/v1/posts/delete/:id
+GET /api/v1/transactions/:id
 
 Auth: Required
 
-Hệ thống chỉ cập nhật:
-
-deleted = true
-
----
-
-# 5. Category APIs
-
-## 5.1. GET /api/v1/categories
-
-Auth: Optional
-
-Find: { deleted: false }
-
-Query Params (optional): /api/v1/categories?keyword=react&page=1&limit=10
-
-| Param      | Kiểu   | Mô tả                |
-| ---------- | ------ | -------------------- |
-| keyword    | String | search theo title    |
-| page       | Number | mặc định 1           |
-| limit      | Number | mặc định 10          |
-
-👉 Thêm search:
-if (keyword) filter.title = /keyword/i
-
 Response:
+
+```json
 {
   "code": 200,
-  "message": "Success",
-  "data": [Category],
-  "pagination": {
-    "currentPage": 1,
-    "limitItems": 10,
-    "totalItems": 5,
-    "totalPages": 1
+  "data": {
+    "id": "...",
+    "type": "expense",
+    "amount": 50000,
+    "category": {
+      "id": "...",
+      "name": "Ăn uống"
+    },
+    "note": "Phở sáng",
+    "transactionDate": "..."
   }
 }
+```
 
-## 5.2. POST /api/v1/categories
+---
 
-Auth: Required (Admin)
+## 2.4. Cập nhật giao dịch
 
-Request Body:
-{
-  "title": "Programming",
-  "slug": "programming"
-}
+PATCH /api/v1/transactions/:id
 
-👉 Backend xử lý:
-- Validate title, slug unique
-- set deleted: false
-
-Response (Success):
-{
-  code: 200,
-  message: "Tạo danh mục thành công",
-  data: Category
-}
-
-## 5.3. PATCH /api/v1/categories/:id
-
-Auth: Required (Admin)
+Auth: Required
 
 Request Body:
-{
-  "title": "Updated Title",
-  "slug": "updated-slug"
-}
 
-👉 Backend xử lý:
-- Validate title, slug unique (không trùng với category khác)
-- Update fields
+```json
+{
+  "amount": 60000,
+  "categoryId": "string",
+  "note": "Phở + cafe"
+}
+```
+
+👉 Logic:
+
+* Chỉ update nếu `userId` match
+* Update `updatedAt`
 
 Response:
-{
-  code: 200,
-  message: "Cập nhật thành công",
-  data: Category
-}
 
-## 5.4. DELETE /api/v1/categories/:id
-
-Auth: Required (Admin)
-
-→ Soft delete: update deleted = true, deletedAt = new Date()
-
-Response:
-{
-  code: 200,
-  message: "Xóa thành công",
-  data: null
-}
-
-# 6. ROLE APIs
-
-## 6.1. GET /api/v1/roles
-
-Auth: Required (Admin)
-
-Find: { deleted: false }
-
-Response:
+```json
 {
   "code": 200,
-  "message": "Success",
-  "data": [Role]
+  "message": "Cập nhật thành công",
+  "data": Transaction
 }
+```
 
-## 6.2. POST /api/v1/roles
+---
 
-Auth: Required (Admin)
+## 2.5. Xóa giao dịch (Soft delete)
 
-Request Body:
-{
-  "title": "Admin",
-  "description": "Administrator role",
-  "permissions": ["posts_create", "posts_delete", "users_manage"]
-}
+DELETE /api/v1/transactions/:id
 
-👉 Backend xử lý:
-- Validate title unique
-- permissions là array of strings
+Auth: Required
 
-Response (Success):
-{
-  code: 200,
-  message: "Tạo vai trò thành công",
-  data: Role
-}
+👉 Backend:
 
-## 6.3. PATCH /api/v1/roles/:id
-
-Auth: Required (Admin)
-
-Request Body:
-{
-  "title": "Updated Role",
-  "description": "Updated description",
-  "permissions": ["posts_view", "posts_edit"]
-}
-
-👉 Backend xử lý:
-- Validate title unique (nếu update)
-- Update fields
+```
+deletedAt = new Date()
+```
 
 Response:
-{
-  code: 200,
-  message: "Cập nhật thành công",
-  data: Role
-}
 
-## 6.4. DELETE /api/v1/roles/:id
-
-Auth: Required (Admin)
-
-→ Soft delete: update deleted = true, deletedAt = new Date()
-
-Response:
-{
-  code: 200,
-  message: "Xóa thành công",
-  data: null
-}
-
-# 7. SETTINGS APIs
-
-## 7.1. GET /api/v1/settings
-
-Auth: Required (Admin)
-
-Response:
+```json
 {
   "code": 200,
-  "message": "Success",
-  "data": { "site_name": "My Blog", "site_description": "..." }
+  "message": "Xóa thành công",
+  "data": null
 }
+```
 
-## 7.2. PATCH /api/v1/settings
+---
 
-Auth: Required (Admin)
+# 3. Categories APIs
 
-Request Body:
+## 3.1. Lấy danh mục
+
+GET /api/v1/categories
+
+Auth: Required
+
+Query Params:
+
+| Param   | Kiểu   | Mô tả            |
+| ------- | ------ | ---------------- |
+| type    | String | expense / income |
+| keyword | String | search name      |
+
+Filter:
+
+```javascript
 {
-  "key": "site_name",
-  "value": "Updated Blog Name"
+  userId: { $in: [req.user.id, null] },
+  deletedAt: null
 }
-
-👉 Backend xử lý:
-- Update hoặc tạo setting theo key
+```
 
 Response:
+
+```json
 {
-  code: 200,
-  message: "Cập nhật thành công",
-  data: null
+  "code": 200,
+  "data": [Category]
 }
-
-# 8. HTTP Status Codes
-
-- 200: Thành công
-- 201: Tạo mới thành công
-- 400: Lỗi dữ liệu đầu vào
-- 401: Chưa xác thực
-- 403: Không có quyền
-- 404: Không tìm thấy
-- 500: Lỗi server
+```
 
 ---
 
-# 9. Quy Tắc Thiết Kế
+## 3.2. Tạo danh mục
 
-- Sử dụng danh từ cho route (users, posts)
-- Không dùng động từ trong URL
-- Dùng đúng HTTP method (GET, POST, PATCH, DELETE)
-- Luôn trả về JSON
-- Xử lý lỗi tập trung
+POST /api/v1/categories
+
+Auth: Required
+
+Request Body:
+
+```json
+{
+  "name": "Cafe",
+  "emoji": "☕",
+  "type": "expense"
+}
+```
+
+Response:
+
+```json
+{
+  "code": 201,
+  "message": "Tạo danh mục thành công",
+  "data": Category
+}
+```
 
 ---
 
-# 10. Tiêu Chí Hoàn Thành
+## 3.3. Cập nhật danh mục
 
-API được xem là hoàn chỉnh khi:
+PATCH /api/v1/categories/:id
 
-- Đáp ứng đầy đủ FR-01 đến FR-15
-- Phân quyền hoạt động đúng
-- Soft delete hoạt động chính xác
-- JWT xác thực ổn định
-- Không có route trùng lặp hoặc dư thừa
+Auth: Required
+
+Request Body:
+
+```json
+{
+  "name": "Coffee",
+  "emoji": "☕"
+}
+```
 
 ---
 
-Tác giả: [Lê Quang Tuyến]  
-Phiên bản: 1.1
-Trạng thái: Giai đoạn phân tích & thiết kế
+## 3.4. Ẩn danh mục
+
+PATCH /api/v1/categories/:id/hide
+
+Auth: Required
+
+👉 Backend:
+
+```
+isHidden = true
+```
+
+---
+
+# 4. Budgets APIs
+
+## 4.1. Lấy ngân sách theo tháng
+
+GET /api/v1/budgets/:yearMonth
+
+Auth: Required
+
+Response:
+
+```json
+{
+  "code": 200,
+  "data": {
+    "yearMonth": "2025-06",
+    "totalBudget": 5000000,
+    "budgetByCategory": [...]
+  }
+}
+```
+
+---
+
+## 4.2. Tạo / cập nhật ngân sách
+
+POST /api/v1/budgets
+
+Auth: Required
+
+Request Body:
+
+```json
+{
+  "yearMonth": "2025-06",
+  "totalBudget": 5000000,
+  "budgetByCategory": [
+    {
+      "categoryId": "string",
+      "limit": 1500000
+    }
+  ]
+}
+```
+
+👉 Logic:
+
+* Nếu tồn tại → update
+* Nếu chưa → create
+
+---
+
+# 5. Settings APIs
+
+## 5.1. Lấy settings
+
+GET /api/v1/settings
+
+Auth: Required
+
+Response:
+
+```json
+{
+  "code": 200,
+  "data": {
+    "currency": "VND",
+    "budgetAlertThreshold": 80,
+    "language": "vi"
+  }
+}
+```
+
+---
+
+## 5.2. Cập nhật settings
+
+PATCH /api/v1/settings
+
+Auth: Required
+
+Request Body:
+
+```json
+{
+  "budgetAlertThreshold": 90,
+  "notificationEnabled": false
+}
+```
+
+---
+
+# 6. Sync APIs (Quan trọng cho v1.1)
+
+## 6.1. Sync từ client → server
+
+POST /api/v1/sync/push
+
+Auth: Required
+
+Request:
+
+```json
+{
+  "transactions": [...],
+  "categories": [...],
+  "budgets": {...},
+  "lastSync": "ISO date"
+}
+```
+
+---
+
+## 6.2. Sync từ server → client
+
+GET /api/v1/sync/pull
+
+Auth: Required
+
+Query:
+
+```
+?lastSync=ISO_DATE
+```
+
+Response:
+
+```json
+{
+  "code": 200,
+  "data": {
+    "transactions": [...],
+    "categories": [...],
+    "budgets": {...],
+    "deleted": [...]
+  }
+}
+```
+
+---
+
+# 7. HTTP Status Codes
+
+* 200: Thành công
+* 201: Tạo mới thành công
+* 400: Sai dữ liệu
+* 401: Chưa login
+* 403: Không có quyền
+* 404: Không tồn tại
+* 500: Lỗi server
+
+---
+
+# 8. Quy Tắc Thiết Kế
+
+* Dùng **RESTful chuẩn**
+* Route dùng **noun** (transactions, categories)
+* Soft delete (`deletedAt`)
+* Timestamp: ISO 8601
+* Client dùng UUID, server dùng ObjectId
+* Luôn hỗ trợ **offline-first → sync sau**
+
+---
+
+# 9. Tiêu Chí Hoàn Thành
+
+* ✅ CRUD transactions đầy đủ
+* ✅ Category hoạt động (default + custom)
+* ✅ Budget logic đúng
+* ✅ Sync 2 chiều hoạt động
+* ✅ Không conflict dữ liệu khi offline
+* ✅ API consistent với LocalStorage schema
