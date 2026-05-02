@@ -16,13 +16,13 @@
 
 ### 2. **Thiết lập dự án**
 - [x] Khởi tạo monorepo hoặc tách `frontend/` và `backend`.
-- [ ] Khởi tạo Frontend: `pnpm create vite@latest pockly-client --template react-ts`.
-- [ ] Cài đặt dependencies Frontend: Tailwind CSS, shadcn/ui, Recharts, Zustand, date-fns.
-- [ ] Cấu hình shadcn/ui (Claude design system): theme, color tokens, typography.
-- [ ] Khởi tạo Backend: `pnpm init` trong `pockly-server/`, cài Express + TypeScript.
-- [ ] Cấu hình ESLint + Prettier cho cả frontend và backend.
-- [ ] Tạo repository GitHub, cấu hình `.gitignore`, `README.md` ban đầu.
-- [ ] Cấu hình deploy pipeline: Vercel cho frontend, Railway/Render cho backend.
+- [x] Khởi tạo Frontend: `pnpm create vite@latest pockly-client --template react-ts`.
+- [x] Cài đặt dependencies Frontend: Tailwind CSS, shadcn/ui, Recharts, Zustand, date-fns.
+- [x] Cấu hình shadcn/ui (Claude design system): theme, color tokens, typography.
+- [x] Khởi tạo Backend: `pnpm init` trong `pockly-server/`, cài Express + TypeScript.
+- [x] Cấu hình ESLint + Prettier cho cả frontend và backend.
+- [x] Tạo repository GitHub, cấu hình `.gitignore`, `README.md` ban đầu.
+- [x] Cấu hình deploy pipeline: Vercel cho frontend, Railway/Render cho backend.
 
 ---
 
