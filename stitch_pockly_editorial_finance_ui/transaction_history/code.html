@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#390b00",
+                        "on-primary": "#ffffff",
+                        "secondary": "#5f5e5a",
+                        "surface-container": "#fdeae4",
+                        "inverse-primary": "#ffb59d",
+                        "on-secondary-container": "#64635e",
+                        "on-secondary-fixed": "#1c1c19",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c9c6c1",
+                        "on-primary-container": "#fffbff",
+                        "on-tertiary-fixed-variant": "#004f50",
+                        "primary-container": "#b95837",
+                        "error": "#ba1a1a",
+                        "on-surface": "#231916",
+                        "primary": "#9a4021",
+                        "secondary-container": "#e2dfda",
+                        "background": "#fff8f6",
+                        "tertiary-container": "#008283",
+                        "on-secondary-fixed-variant": "#474743",
+                        "surface-dim": "#e9d6d1",
+                        "surface": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#dcc1b8",
+                        "surface-bright": "#fff8f6",
+                        "on-primary-fixed-variant": "#7e2c0e",
+                        "on-secondary": "#ffffff",
+                        "outline": "#89726b",
+                        "secondary-fixed": "#e5e2dd",
+                        "inverse-surface": "#392e2b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#9d4324",
+                        "surface-variant": "#f1dfd9",
+                        "inverse-on-surface": "#ffede8",
+                        "primary-fixed": "#ffdbd0",
+                        "on-background": "#231916",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#ffb59d",
+                        "surface-container-highest": "#f1dfd9",
+                        "on-tertiary-fixed": "#002020",
+                        "tertiary-fixed-dim": "#6cd7d8",
+                        "tertiary-fixed": "#89f4f4",
+                        "tertiary": "#006768",
+                        "surface-container-high": "#f7e4df",
+                        "on-tertiary-container": "#f3fffe",
+                        "on-surface-variant": "#56423c",
+                        "surface-container-low": "#fff1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "gutter": "12px",
+                        "margin-mobile": "20px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["Newsreader"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Newsreader"],
+                        "headline-md": ["Newsreader"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .parchment-bg { background-color: #f5f4ed; }
+        .ivory-card { background-color: #faf9f5; }
+        .border-medium { border-color: #e8e6dc; }
+        .terracotta-text { color: #c96442; }
+        .terracotta-bg { background-color: #c96442; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="parchment-bg text-on-surface font-body-lg antialiased">
+<!-- Top App Bar -->
+<header class="bg-[#f5f4ed] dark:bg-stone-950 border-b border-[#e8e6dc] dark:border-stone-800 flex items-center justify-between px-5 h-16 w-full docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-medium ring-1 ring-black/5">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a woman with a calm expression, set against a warm, soft-focus background that complements the parchment and terracotta color palette. The lighting is natural and flattering, evoking a sense of personal wealth management and sophisticated editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOn4UU10Jm3zrbdn9YOkol-7dZb6OB5OwUFy7Xfhg3Yikrt3-RyRwvbVe-YPNCLWLh44hA5zCUsCIbs4raIeHLbeoi9cpfnhcpszc5fX0Du9R0TLkGviTV0q3bET-VTxItwMLvkor4NiNloyRssvYweyMJ0jo8KMQ7dVjnYn17YPU91051uZenX4bPz1bRKh55Jru1OE5b4BkRifA2FO6tsmErX3fEZ7AteiWC56LcuTP4FkuwjGOWBCwOTDjmzPe-2HAE1ZvXogw"/>
+</div>
+<span class="font-['Newsreader'] serif font-medium text-2xl font-serif font-bold text-[#c96442] dark:text-[#d97a5a] tracking-tight">Pockly</span>
+</div>
+<button class="material-symbols-outlined text-[#c96442] dark:text-[#d97a5a] hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors p-2 rounded-full scale-95 active:opacity-80 transition-transform">
+            settings
+        </button>
+</header>
+<main class="pb-24 pt-8 px-margin-mobile max-w-2xl mx-auto">
+<!-- History Header -->
+<div class="mb-lg">
+<h1 class="font-headline-md text-headline-md terracotta-text mb-xs">History</h1>
+<p class="font-body-sm text-body-sm text-secondary">Review your financial timeline and habits.</p>
+</div>
+<!-- Period Tabs -->
+<div class="flex gap-md mb-xl overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-lg py-2 rounded-full terracotta-bg text-on-primary font-label-caps text-label-caps whitespace-nowrap">Today</button>
+<button class="px-lg py-2 rounded-full ivory-card border border-medium text-on-surface-variant font-label-caps text-label-caps whitespace-nowrap hover:bg-stone-100 transition-colors">Week</button>
+<button class="px-lg py-2 rounded-full ivory-card border border-medium text-on-surface-variant font-label-caps text-label-caps whitespace-nowrap hover:bg-stone-100 transition-colors">Month</button>
+</div>
+<!-- Transaction List -->
+<div class="space-y-xl">
+<!-- Group: October 24 -->
+<section>
+<h2 class="font-label-caps text-label-caps text-secondary mb-md tracking-widest uppercase">October 24</h2>
+<div class="ivory-card border border-medium rounded-xl overflow-hidden ring-1 ring-black/5">
+<!-- Item 1: Expense -->
+<div class="relative group">
+<!-- Swipe Hint Area -->
+<div class="absolute inset-y-0 right-0 w-16 bg-error flex items-center justify-center translate-x-full group-hover:translate-x-0 transition-transform duration-300">
+<span class="material-symbols-outlined text-white">delete</span>
+</div>
+<div class="flex items-center justify-between p-md hover:bg-stone-50 transition-colors relative z-10 bg-[#faf9f5]">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-low border border-medium flex items-center justify-center">
+<span class="material-symbols-outlined terracotta-text" data-icon="coffee">coffee</span>
+</div>
+<div>
+<h3 class="font-title-sm text-body-lg font-semibold text-on-surface">Blue Bottle Coffee</h3>
+<p class="font-body-sm text-body-sm text-secondary">Breakfast &amp; Caffeine</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-sm text-body-lg font-bold text-error">-$6.50</p>
+</div>
+</div>
+</div>
+<div class="h-px bg-[#e8e6dc] mx-md"></div>
+<!-- Item 2: Income -->
+<div class="flex items-center justify-between p-md hover:bg-stone-50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-low border border-medium flex items-center justify-center">
+<span class="material-symbols-outlined terracotta-text" data-icon="work">work</span>
+</div>
+<div>
+<h3 class="font-title-sm text-body-lg font-semibold text-on-surface">Client Payment</h3>
+<p class="font-body-sm text-body-sm text-secondary">Editorial Design Project</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-sm text-body-lg font-bold text-tertiary">+$1,200.00</p>
+</div>
+</div>
+<div class="h-px bg-[#e8e6dc] mx-md"></div>
+<!-- Item 3: Expense -->
+<div class="flex items-center justify-between p-md hover:bg-stone-50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-low border border-medium flex items-center justify-center">
+<span class="material-symbols-outlined terracotta-text" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<div>
+<h3 class="font-title-sm text-body-lg font-semibold text-on-surface">Paper Culture</h3>
+<p class="font-body-sm text-body-sm text-secondary">Stationery Supplies</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-sm text-body-lg font-bold text-error">-$45.20</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Group: October 23 -->
+<section>
+<h2 class="font-label-caps text-label-caps text-secondary mb-md tracking-widest uppercase">October 23</h2>
+<div class="ivory-card border border-medium rounded-xl overflow-hidden ring-1 ring-black/5">
+<!-- Item 4: Expense -->
+<div class="flex items-center justify-between p-md hover:bg-stone-50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-low border border-medium flex items-center justify-center">
+<span class="material-symbols-outlined terracotta-text" data-icon="directions_car">directions_car</span>
+</div>
+<div>
+<h3 class="font-title-sm text-body-lg font-semibold text-on-surface">Ride Share</h3>
+<p class="font-body-sm text-body-sm text-secondary">To City Gallery</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-sm text-body-lg font-bold text-error">-$18.40</p>
+</div>
+</div>
+<div class="h-px bg-[#e8e6dc] mx-md"></div>
+<!-- Item 5: Expense -->
+<div class="flex items-center justify-between p-md hover:bg-stone-50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-low border border-medium flex items-center justify-center">
+<span class="material-symbols-outlined terracotta-text" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<h3 class="font-title-sm text-body-lg font-semibold text-on-surface">The Hearth Bistro</h3>
+<p class="font-body-sm text-body-sm text-secondary">Dinner with Sarah</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-sm text-body-lg font-bold text-error">-$82.00</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Asymmetric Insight Card -->
+<div class="mt-xl grid grid-cols-12 gap-gutter">
+<div class="col-span-12 ivory-card border border-medium rounded-xl p-lg ring-1 ring-black/5 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline-md text-title-sm terracotta-text mb-sm">Weekly Summary</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[70%]">Your spending in "Dining Out" is 12% lower than last week. Great progress!</p>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-9xl text-stone-100 opacity-50 pointer-events-none" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="bg-[#faf9f5] dark:bg-stone-900 fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-2 border-t border-[#e8e6dc] dark:border-stone-800 ring-1 ring-black/5">
+<a class="flex flex-col items-center text-stone-400 dark:text-stone-500 font-sans text-[11px] font-medium uppercase tracking-wider hover:text-[#c96442] transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center text-stone-400 dark:text-stone-500 font-sans text-[11px] font-medium uppercase tracking-wider hover:text-[#c96442] transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span>Stats</span>
+</a>
+<button class="flex flex-col items-center text-[#c96442] dark:text-[#d97a5a] font-sans text-[11px] font-medium uppercase tracking-wider active:scale-90 transition-transform duration-150 -mt-8">
+<div class="w-14 h-14 terracotta-bg rounded-full flex items-center justify-center text-white shadow-lg ring-4 ring-[#f5f4ed]">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</div>
+<span class="mt-2 terracotta-text">Add</span>
+</button>
+<a class="flex flex-col items-center text-stone-400 dark:text-stone-500 font-sans text-[11px] font-medium uppercase tracking-wider hover:text-[#c96442] transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Budget</span>
+</a>
+<a class="flex flex-col items-center text-[#c96442] dark:text-[#d97a5a] font-bold font-sans text-[11px] font-medium uppercase tracking-wider active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="list_alt">list_alt</span>
+<span>History</span>
+</a>
+</nav>
+</body></html>

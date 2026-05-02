@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#390b00",
+                        "on-primary": "#ffffff",
+                        "secondary": "#5f5e5a",
+                        "surface-container": "#fdeae4",
+                        "inverse-primary": "#ffb59d",
+                        "on-secondary-container": "#64635e",
+                        "on-secondary-fixed": "#1c1c19",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c9c6c1",
+                        "on-primary-container": "#fffbff",
+                        "on-tertiary-fixed-variant": "#004f50",
+                        "primary-container": "#b95837",
+                        "error": "#ba1a1a",
+                        "on-surface": "#231916",
+                        "primary": "#9a4021",
+                        "secondary-container": "#e2dfda",
+                        "background": "#f5f4ed",
+                        "tertiary-container": "#008283",
+                        "on-secondary-fixed-variant": "#474743",
+                        "surface-dim": "#e9d6d1",
+                        "surface": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#dcc1b8",
+                        "surface-bright": "#fff8f6",
+                        "on-primary-fixed-variant": "#7e2c0e",
+                        "on-secondary": "#ffffff",
+                        "outline": "#89726b",
+                        "secondary-fixed": "#e5e2dd",
+                        "inverse-surface": "#392e2b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#9d4324",
+                        "surface-variant": "#f1dfd9",
+                        "inverse-on-surface": "#ffede8",
+                        "primary-fixed": "#ffdbd0",
+                        "on-background": "#231916",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#ffb59d",
+                        "surface-container-highest": "#f1dfd9",
+                        "on-tertiary-fixed": "#002020",
+                        "tertiary-fixed-dim": "#6cd7d8",
+                        "tertiary-fixed": "#89f4f4",
+                        "tertiary": "#006768",
+                        "surface-container-high": "#f7e4df",
+                        "on-tertiary-container": "#f3fffe",
+                        "on-surface-variant": "#56423c",
+                        "surface-container-low": "#fff1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "gutter": "12px",
+                        "margin-mobile": "20px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["Newsreader"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Newsreader"],
+                        "headline-md": ["Newsreader"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #f5f4ed; }
+        .ivory-card { background-color: #faf9f5; border: 1px solid #e8e6dc; border-radius: 12px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-lg text-on-surface antialiased pb-24">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between px-5 h-16 w-full docked full-width top-0 bg-[#f5f4ed] border-b border-[#e8e6dc] z-40">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfYdGg3fzh_AIddChMpqItCeWLlxyOu9cimuORettmC34GJETCWik7omL-anXXXFOma1gdm7Lb9j8zvu1XyJp96pfQssiyb0Xhht6NUctu7DA5IrmsiBRtWqdtRHE5Ho3A-MxWIDPvOPDSZfTNrY0G55br2RAhBWkIQg0dR8HgdOvdw4qfzCBRK-yprYiWbRcjjIW5PD8luCztas1E4SUTUsed4eD1lUih9JMc6eT6yryIO-i8YmzCnJn4Yker_C2dQZz2ERrfsJM"/>
+</div>
+<span class="font-['Newsreader'] serif font-bold text-2xl text-[#c96442] tracking-tight">Pockly</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors scale-95 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined text-stone-500" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="px-margin-mobile pt-lg flex flex-col gap-xl">
+<!-- Main Header -->
+<div class="flex flex-col gap-xs">
+<h1 class="font-display-lg text-display-lg text-primary">Budgets</h1>
+<p class="font-body-sm text-body-sm text-secondary">Your financial plan for October 2023</p>
+</div>
+<!-- Monthly Overview Card -->
+<section class="ivory-card p-lg ring-1 ring-black/5">
+<div class="flex justify-between items-end mb-md">
+<div>
+<h2 class="font-label-caps text-label-caps text-secondary uppercase mb-xs">Total Monthly Budget</h2>
+<p class="font-display-lg text-display-lg text-on-surface">$3,420.00 <span class="text-body-sm font-body-sm text-secondary">of $4,500</span></p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-primary">76% USED</span>
+</div>
+</div>
+<!-- Large Progress Bar -->
+<div class="w-full h-4 bg-secondary-fixed rounded-full overflow-hidden mb-sm">
+<div class="h-full bg-primary" style="width: 76%;"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-secondary">Remaining to spend</span>
+<span class="font-title-sm text-title-sm text-primary">$1,080.00</span>
+</div>
+</section>
+<!-- Category Budgets Grid -->
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h3 class="font-title-sm text-title-sm">Categories</h3>
+<button class="font-label-caps text-label-caps text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    ADD CATEGORY
+                </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Food Category -->
+<div class="ivory-card p-md">
+<div class="flex justify-between mb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="restaurant">restaurant</span>
+<span class="font-body-lg font-medium">Food &amp; Dining</span>
+</div>
+<span class="font-body-sm text-secondary">$120 left</span>
+</div>
+<div class="w-full h-2 bg-secondary-fixed rounded-full overflow-hidden mb-xs">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between text-[11px] font-label-caps text-secondary">
+<span>$680.00 spent</span>
+<span>$800.00 limit</span>
+</div>
+</div>
+<!-- Entertainment Category -->
+<div class="ivory-card p-md">
+<div class="flex justify-between mb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="movie">movie</span>
+<span class="font-body-lg font-medium">Entertainment</span>
+</div>
+<span class="font-body-sm text-secondary">$245 left</span>
+</div>
+<div class="w-full h-2 bg-secondary-fixed rounded-full overflow-hidden mb-xs">
+<div class="h-full bg-primary" style="width: 30%;"></div>
+</div>
+<div class="flex justify-between text-[11px] font-label-caps text-secondary">
+<span>$105.00 spent</span>
+<span>$350.00 limit</span>
+</div>
+</div>
+<!-- Shopping Category - Warning State -->
+<div class="ivory-card p-md border-primary/20">
+<div class="flex justify-between mb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-body-lg font-medium">Shopping</span>
+</div>
+<span class="font-body-sm text-primary">-$42 over</span>
+</div>
+<div class="w-full h-2 bg-secondary-fixed rounded-full overflow-hidden mb-xs">
+<div class="h-full bg-primary" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between text-[11px] font-label-caps text-secondary">
+<span>$442.00 spent</span>
+<span>$400.00 limit</span>
+</div>
+</div>
+<!-- Utilities Category -->
+<div class="ivory-card p-md">
+<div class="flex justify-between mb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+<span class="font-body-lg font-medium">Utilities</span>
+</div>
+<span class="font-body-sm text-secondary">$50 left</span>
+</div>
+<div class="w-full h-2 bg-secondary-fixed rounded-full overflow-hidden mb-xs">
+<div class="h-full bg-primary" style="width: 80%;"></div>
+</div>
+<div class="flex justify-between text-[11px] font-label-caps text-secondary">
+<span>$200.00 spent</span>
+<span>$250.00 limit</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Input Form -->
+<section class="flex flex-col gap-md">
+<h3 class="font-title-sm text-title-sm">Quick Adjust</h3>
+<div class="ivory-card p-lg">
+<form class="flex flex-col gap-md">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-['Newsreader'] serif text-body-sm text-on-surface">Category</label>
+<select class="w-full h-12 border border-[#e8e6dc] bg-transparent rounded-lg px-md focus:border-[#c96442] focus:ring-0 font-body-sm text-on-surface appearance-none">
+<option>Groceries</option>
+<option>Rent</option>
+<option>Transport</option>
+<option>Subscriptions</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-['Newsreader'] serif text-body-sm text-on-surface">Monthly Limit</label>
+<div class="relative">
+<span class="absolute left-md top-1/2 -translate-y-1/2 text-secondary">$</span>
+<input class="w-full h-12 border border-[#e8e6dc] bg-transparent rounded-lg pl-8 pr-md focus:border-[#c96442] focus:ring-0 font-body-sm text-on-surface" placeholder="0.00" type="number"/>
+</div>
+</div>
+</div>
+<button class="w-full h-12 bg-[#c96442] text-on-primary font-body-lg font-semibold rounded-lg hover:opacity-90 transition-opacity active:scale-[0.98]" type="submit">
+                        Update Budget
+                    </button>
+</form>
+</div>
+</section>
+<!-- Aesthetic Visual Element -->
+<div class="w-full h-48 rounded-xl overflow-hidden relative border border-[#e8e6dc]">
+<img class="w-full h-full object-cover grayscale opacity-40 mix-blend-multiply" data-alt="A macro photograph of vintage bookkeeping ledgers and high-quality cream-colored paper. The scene is lit with warm, natural afternoon sunlight casting long, soft shadows across the textured surfaces. The aesthetic is clean and minimalist, using a palette of parchment whites and earthy terracotta tones, evoking a sense of calm and organized financial planning." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5M33ZSj15IoxqejIgzRHwbsJe9LaXRSseo2Xl3WMTf3KPL-lyA8YSokWu96-F1s0Qh_U7V6Cx9LR9fH9lptrQqoPIWYxImSoYPzTsNMUteARznozhXfOGTSEUHkQkPpfI7UamrlOK25r0SoWQ80fwcApz85PwrnfywGv7f8iGRwyIh9LE0gF8ku7lgkhrWJk8vTEyCctfSas4WeU4OSPd_nSUHW1fjfnxvPUJUGtKePemfh01P9lBlS1-ltBIoud_q7TO8pEcrvk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#f5f4ed] to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<p class="font-['Newsreader'] serif italic text-lg text-primary">"A budget is telling your money where to go instead of wondering where it went."</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-2 bg-[#faf9f5] border-t border-[#e8e6dc] ring-1 ring-black/5">
+<button class="flex flex-col items-center text-stone-400 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Home</span>
+</button>
+<button class="flex flex-col items-center text-stone-400 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Stats</span>
+</button>
+<button class="flex flex-col items-center text-stone-400 active:scale-90 transition-transform duration-150 -mt-8 bg-[#c96442] text-white p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-3xl" data-icon="add_circle">add_circle</span>
+</button>
+<button class="flex flex-col items-center text-[#c96442] font-bold active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined mb-1" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Budget</span>
+</button>
+<button class="flex flex-col items-center text-stone-400 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined mb-1" data-icon="list_alt">list_alt</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">History</span>
+</button>
+</nav>
+</body></html>
