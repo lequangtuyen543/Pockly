@@ -42,7 +42,7 @@
   - [x] Stats Controller (`stats.controller.ts`).
 - [x] Viết middleware xử lý lỗi tập trung (`errorHandler.ts`).
 - [x] Viết middleware validate input (`validateRequest.ts`).
-- [ ] Viết unit test cơ bản cho controllers (Jest).
+- [x] Viết unit test cơ bản cho controllers (Jest).
 
 > **MVP note:** Backend được chuẩn bị sẵn cấu trúc, nhưng v1.0 frontend chạy hoàn toàn với LocalStorage. Backend sẽ kích hoạt ở v1.1 khi cần sync cloud.
 
