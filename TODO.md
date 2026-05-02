@@ -88,16 +88,16 @@
 - [x] Tap vào phần biểu đồ để xem chi tiết danh mục.
 
 #### 5.4 Cảnh báo ngân sách
-- [ ] Màn hình cài đặt budget: input hạn mức tổng tháng, hạn mức theo từng danh mục.
-- [ ] Component `BudgetProgress`: progress bar với màu động (xanh → vàng → đỏ theo %).
-- [ ] Logic trigger cảnh báo khi đạt 80% và 100%.
-- [ ] Banner in-app alert hiển thị sau mỗi lần ghi giao dịch vượt ngưỡng.
-- [ ] Request push notification permission (với fallback graceful nếu từ chối).
+- [x] Màn hình cài đặt budget: input hạn mức tổng tháng, hạn mức theo từng danh mục.
+- [x] Component `BudgetProgress`: progress bar với màu động (xanh → vàng → đỏ theo %).
+- [x] Logic trigger cảnh báo khi đạt 80% và 100%.
+- [x] Banner in-app alert hiển thị sau mỗi lần ghi giao dịch vượt ngưỡng.
+- [x] Request push notification permission (với fallback graceful nếu từ chối).
 
 #### 5.5 Danh mục tuỳ chỉnh
-- [ ] Màn hình quản lý danh mục: danh sách, thêm mới, đổi tên, ẩn.
-- [ ] Picker emoji cho icon danh mục.
-- [ ] Không xoá danh mục đã có giao dịch (chỉ ẩn).
+- [x] Màn hình quản lý danh mục: danh sách, thêm mới, đổi tên, ẩn.
+- [x] Picker emoji cho icon danh mục.
+- [x] Không xoá danh mục đã có giao dịch (chỉ ẩn).
 
 #### 5.6 Xuất dữ liệu CSV
 - [ ] Nút Export trong Settings.

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { useBudgetStore } from '@/store/budgetStore';
 import { format } from 'date-fns';
 
 interface TransactionFormProps {
@@ -58,6 +59,11 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) =
       setNote('');
       setDate(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
 
+      // Check budget alerts for expense transactions
+      if (transaction.type === 'expense') {
+        checkBudgetAlerts(transaction.amount, transaction.category);
+      }
+
       // Show success animation
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 2000);
@@ -66,6 +72,47 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) =
     }
 
     setIsSubmitting(false);
+  };
+
+  const checkBudgetAlerts = (expenseAmount: number, categoryId: string) => {
+    const currentMonth = format(new Date(), 'yyyy-MM');
+    const { getBudgetProgress } = useBudgetStore.getState();
+    const { transactions } = useTransactionStore.getState();
+
+    const progress = getBudgetProgress(currentMonth, [...transactions, {
+      type: 'expense',
+      amount: expenseAmount,
+      category: categoryId,
+      date: new Date().toISOString(),
+    }]);
+
+    // Check total budget
+    if (progress.percentage >= 100 && progress.used - expenseAmount < progress.total) {
+      // Just crossed 100%
+      showBudgetNotification('Vượt quá ngân sách!', `Bạn vừa vượt quá hạn mức tháng này.`);
+    } else if (progress.percentage >= 80 && progress.used - expenseAmount < progress.total * 0.8) {
+      // Just crossed 80%
+      showBudgetNotification('Cảnh báo ngân sách', `Bạn đã chi ${progress.percentage.toFixed(1)}% hạn mức tháng này.`);
+    }
+
+    // Check category budget
+    const categoryProgress = progress.categoryProgress[categoryId];
+    if (categoryProgress && categoryProgress.percentage >= 100 &&
+        categoryProgress.used - expenseAmount < categoryProgress.limit) {
+      showBudgetNotification('Vượt quá ngân sách danh mục!', `Danh mục này đã vượt quá hạn mức.`);
+    } else if (categoryProgress && categoryProgress.percentage >= 80 &&
+               categoryProgress.used - expenseAmount < categoryProgress.limit * 0.8) {
+      showBudgetNotification('Cảnh báo danh mục', `Danh mục này đã chi ${categoryProgress.percentage.toFixed(1)}% hạn mức.`);
+    }
+  };
+
+  const showBudgetNotification = (title: string, body: string) => {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification(`Pockly - ${title}`, {
+        body,
+        icon: '/favicon.ico',
+      });
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -132,7 +179,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) =
               <SelectValue placeholder="Chọn danh mục" />
             </SelectTrigger>
             <SelectContent>
-              {categories.map((cat) => (
+              {categories.filter(cat => !cat.hidden).map((cat) => (
                 <SelectItem key={cat.id} value={cat.id}>
                   {cat.icon} {cat.name}
                 </SelectItem>

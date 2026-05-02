@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import type { Category } from '@/lib/storage';
 import { categoryStorage, validateCategory } from '@/lib/storage';
+import { useTransactionStore } from './transactionStore';
 
 interface CategoryState {
   categories: Category[];
@@ -13,6 +14,8 @@ interface CategoryState {
   addCategory: (category: Omit<Category, 'id'>) => Promise<Category | null>;
   updateCategory: (id: string, updates: Partial<Category>) => Promise<boolean>;
   deleteCategory: (id: string) => Promise<boolean>;
+  toggleHidden: (id: string) => Promise<boolean>;
+  canDeleteCategory: (id: string) => boolean;
 }
 
 export const useCategoryStore = create<CategoryState>((set) => ({
@@ -89,19 +92,50 @@ export const useCategoryStore = create<CategoryState>((set) => ({
   deleteCategory: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const success = categoryStorage.delete(id);
-      if (!success) {
-        set({ error: 'Category not found', isLoading: false });
-        return false;
+      // Check if category can be deleted (no transactions)
+      if (useCategoryStore.getState().canDeleteCategory(id)) {
+        const success = categoryStorage.delete(id);
+        if (!success) {
+          set({ error: 'Category not found', isLoading: false });
+          return false;
+        }
+        set(state => ({
+          categories: state.categories.filter(c => c.id !== id),
+          isLoading: false,
+        }));
+      } else {
+        // Hide category instead of deleting
+        const success = await categoryStorage.update(id, { hidden: true });
+        if (!success) {
+          set({ error: 'Failed to hide category', isLoading: false });
+          return false;
+        }
+        set(state => ({
+          categories: state.categories.map(c => c.id === id ? { ...c, hidden: true } : c),
+          isLoading: false,
+        }));
       }
-      set(state => ({
-        categories: state.categories.filter(c => c.id !== id),
-        isLoading: false,
-      }));
       return true;
     } catch (error) {
-      set({ error: 'Failed to delete category', isLoading: false });
+      set({ error: 'Failed to delete/hide category', isLoading: false });
       return false;
     }
+  },
+
+  toggleHidden: async (id) => {
+    const category = categoryStorage.getById(id);
+    if (!category) {
+      set({ error: 'Category not found' });
+      return false;
+    }
+
+    const updates = { hidden: !category.hidden };
+    return await categoryStorage.update(id, updates) !== null;
+  },
+
+  canDeleteCategory: (id) => {
+    // Check if category has any transactions
+    const transactions = useTransactionStore.getState().transactions;
+    return !transactions.some(t => t.category === id);
   },
 }));

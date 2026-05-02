@@ -1,5 +1,6 @@
 // src/store/budgetStore.ts
 import { create } from 'zustand';
+import { startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import type { Budget } from '@/lib/storage';
 import { budgetStorage, validateBudget } from '@/lib/storage';
 
@@ -13,7 +14,13 @@ interface BudgetState {
   setBudget: (budget: Budget) => Promise<boolean>;
   deleteBudget: (month: string) => Promise<boolean>;
   getBudget: (month: string) => Budget | null;
-  getBudgetProgress: (month: string) => { total: number; used: number; percentage: number };
+  getBudgetProgress: (month: string, transactions: any[]) => {
+    total: number;
+    used: number;
+    percentage: number;
+    remaining: number;
+    categoryProgress: Record<string, { used: number; limit: number; percentage: number }>;
+  };
 }
 
 export const useBudgetStore = create<BudgetState>((set, get) => ({
@@ -82,15 +89,45 @@ export const useBudgetStore = create<BudgetState>((set, get) => ({
     return get().budgets[month] || null;
   },
 
-  getBudgetProgress: (month) => {
+  getBudgetProgress: (month, transactions) => {
     const budget = get().getBudget(month);
-    if (!budget) return { total: 0, used: 0, percentage: 0 };
+    if (!budget) {
+      return {
+        total: 0,
+        used: 0,
+        percentage: 0,
+        remaining: 0,
+        categoryProgress: {},
+      };
+    }
 
-    // Calculate used amount from transactions (this would need transaction data)
-    // For now, return placeholder
-    const used = 0; // TODO: calculate from transactions
-    const percentage = budget.total > 0 ? (used / budget.total) * 100 : 0;
+    const monthStart = startOfMonth(new Date(month + '-01'));
+    const monthEnd = endOfMonth(new Date(month + '-01'));
 
-    return { total: budget.total, used, percentage };
+    const monthTransactions = transactions.filter((t: any) =>
+      isWithinInterval(new Date(t.date), { start: monthStart, end: monthEnd }) &&
+      t.type === 'expense'
+    );
+
+    const totalUsed = monthTransactions.reduce((sum: number, t: any) => sum + t.amount, 0);
+    const percentage = budget.total > 0 ? (totalUsed / budget.total) * 100 : 0;
+    const remaining = Math.max(0, budget.total - totalUsed);
+
+    // Calculate category progress
+    const categoryProgress: Record<string, { used: number; limit: number; percentage: number }> = {};
+    Object.entries(budget.categories).forEach(([categoryId, limit]) => {
+      const categoryTransactions = monthTransactions.filter((t: any) => t.category === categoryId);
+      const used = categoryTransactions.reduce((sum: number, t: any) => sum + t.amount, 0);
+      const catPercentage = limit > 0 ? (used / limit) * 100 : 0;
+      categoryProgress[categoryId] = { used, limit, percentage: catPercentage };
+    });
+
+    return {
+      total: budget.total,
+      used: totalUsed,
+      percentage,
+      remaining,
+      categoryProgress,
+    };
   },
 }));

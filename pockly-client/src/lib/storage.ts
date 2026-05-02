@@ -15,6 +15,7 @@ export interface Category {
   name: string;
   icon: string;
   color: string;
+  hidden?: boolean; // Optional field to hide categories
 }
 
 export interface Budget {
@@ -88,6 +89,10 @@ export const transactionStorage = {
 // Categories CRUD
 export const categoryStorage = {
   getAll: (): Category[] => getFromStorage(STORAGE_KEYS.CATEGORIES, []),
+  getById: (id: string): Category | null => {
+    const categories = categoryStorage.getAll();
+    return categories.find(c => c.id === id) || null;
+  },
   add: (category: Omit<Category, 'id'>): Category => {
     const categories = categoryStorage.getAll();
     const newCategory: Category = {

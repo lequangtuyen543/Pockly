@@ -5,6 +5,9 @@ import { SummaryCards } from './SummaryCards';
 import { SpendingChart } from './SpendingChart';
 import { CategoryBreakdown } from './CategoryBreakdown';
 import { MonthComparison } from './MonthComparison';
+import { BudgetAlert } from '../budget/BudgetAlert';
+import { BudgetProgress } from '../budget/BudgetProgress';
+import { BudgetSettings } from '../budget/BudgetSettings';
 
 type Period = 'week' | 'month' | '3months';
 
@@ -20,6 +23,18 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header with Budget Settings */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <BudgetSettings />
+      </div>
+
+      {/* Budget Alerts */}
+      <BudgetAlert />
+
+      {/* Budget Progress */}
+      <BudgetProgress />
+
       {/* Summary Cards */}
       <SummaryCards />
 

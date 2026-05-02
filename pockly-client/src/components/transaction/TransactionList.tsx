@@ -144,7 +144,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onEditTransact
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả danh mục</SelectItem>
-                {categories.map((cat) => (
+                {categories.filter(cat => !cat.hidden).map((cat) => (
                   <SelectItem key={cat.id} value={cat.id}>
                     {cat.icon} {cat.name}
                   </SelectItem>
