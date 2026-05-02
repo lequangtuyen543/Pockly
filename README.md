@@ -31,13 +31,13 @@ pnpm install
 ### Chạy frontend
 
 ```bash
-pnpm --filter frontend dev
+pnpm --filter pockly-client dev
 ```
 
 ### Chạy backend
 
 ```bash
-pnpm --filter backend start
+pnpm --filter pockly-server start
 ```
 
 ### Xây dựng toàn bộ

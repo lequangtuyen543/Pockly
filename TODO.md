@@ -66,10 +66,10 @@
 ### 5. **Xây dựng tính năng chính**
 
 #### 5.1 Nhập thu/chi nhanh
-- [ ] Component `TransactionForm`: toggle Thu/Chi, input số tiền (auto-focus, bàn phím số), dropdown danh mục, ghi chú optional.
-- [ ] Submit bằng Enter hoặc nút Lưu.
-- [ ] Timestamp tự động, có thể chỉnh lại ngày giờ.
-- [ ] Animation feedback sau khi lưu thành công (micro-interaction).
+- [x] Component `TransactionForm`: toggle Thu/Chi, input số tiền (auto-focus, bàn phím số), dropdown danh mục, ghi chú optional.
+- [x] Submit bằng Enter hoặc nút Lưu.
+- [x] Timestamp tự động, có thể chỉnh lại ngày giờ.
+- [x] Animation feedback sau khi lưu thành công (micro-interaction).
 
 #### 5.2 Danh sách giao dịch
 - [ ] Component `TransactionList`: hiển thị theo ngày, màu xanh/đỏ phân biệt thu/chi.
