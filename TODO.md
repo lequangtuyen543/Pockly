@@ -29,17 +29,17 @@
 ### 3. **Thiết lập Backend (Node.js + Express)**
 - [x] Khởi tạo project Express với TypeScript (`tsconfig.json`, `nodemon`).
 - [x] Cấu hình cấu trúc thư mục: `routes/`, `controllers/`, `middleware/`, `lib/`.
-- [ ] Xây dựng các Routes:
-  - [ ] `GET/POST /api/transactions` — lấy và tạo giao dịch.
-  - [ ] `PUT/DELETE /api/transactions/:id` — sửa và xoá giao dịch.
-  - [ ] `GET/POST /api/categories` — danh mục.
-  - [ ] `GET/PUT /api/budgets/:month` — ngân sách theo tháng.
-  - [ ] `GET /api/stats/:month` — thống kê tổng hợp.
-- [ ] Xây dựng các Controllers:
-  - [ ] Transaction Controller (`transaction.controller.ts`).
-  - [ ] Category Controller (`category.controller.ts`).
-  - [ ] Budget Controller (`budget.controller.ts`).
-  - [ ] Stats Controller (`stats.controller.ts`).
+- [x] Xây dựng các Routes:
+  - [x] `GET/POST /api/transactions` — lấy và tạo giao dịch.
+  - [x] `PUT/DELETE /api/transactions/:id` — sửa và xoá giao dịch.
+  - [x] `GET/POST /api/categories` — danh mục.
+  - [x] `GET/PUT /api/budgets/:month` — ngân sách theo tháng.
+  - [x] `GET /api/stats/:month` — thống kê tổng hợp.
+- [x] Xây dựng các Controllers:
+  - [x] Transaction Controller (`transaction.controller.ts`).
+  - [x] Category Controller (`category.controller.ts`).
+  - [x] Budget Controller (`budget.controller.ts`).
+  - [x] Stats Controller (`stats.controller.ts`).
 - [ ] Viết middleware xử lý lỗi tập trung (`errorHandler.ts`).
 - [ ] Viết middleware validate input (`validateRequest.ts`).
 - [ ] Viết unit test cơ bản cho controllers (Jest).
