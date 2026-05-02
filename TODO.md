@@ -80,12 +80,12 @@
 - [x] Confirm dialog khi xoá.
 
 #### 5.3 Dashboard & thống kê
-- [ ] Component `SummaryCards`: tổng thu, tổng chi, số dư trong tháng.
-- [ ] Component `SpendingChart`: biểu đồ cột chi tiêu theo ngày (Recharts BarChart).
-- [ ] Component `CategoryBreakdown`: biểu đồ tròn donut theo danh mục (Recharts PieChart).
-- [ ] Component `MonthComparison`: mini bar so sánh tháng này vs tháng trước.
-- [ ] Tab/toggle chuyển đổi: tuần / tháng / 3 tháng.
-- [ ] Tap vào phần biểu đồ để xem chi tiết danh mục.
+- [x] Component `SummaryCards`: tổng thu, tổng chi, số dư trong tháng.
+- [x] Component `SpendingChart`: biểu đồ cột chi tiêu theo ngày (Recharts BarChart).
+- [x] Component `CategoryBreakdown`: biểu đồ tròn donut theo danh mục (Recharts PieChart).
+- [x] Component `MonthComparison`: mini bar so sánh tháng này vs tháng trước.
+- [x] Tab/toggle chuyển đổi: tuần / tháng / 3 tháng.
+- [x] Tap vào phần biểu đồ để xem chi tiết danh mục.
 
 #### 5.4 Cảnh báo ngân sách
 - [ ] Màn hình cài đặt budget: input hạn mức tổng tháng, hạn mức theo từng danh mục.
