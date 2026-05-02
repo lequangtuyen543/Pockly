@@ -15,7 +15,7 @@
 ---
 
 ### 2. **Thiết lập dự án**
-- [ ] Khởi tạo monorepo hoặc tách `frontend/` và `backend/`.
+- [x] Khởi tạo monorepo hoặc tách `frontend/` và `backend`.
 - [ ] Khởi tạo Frontend: `pnpm create vite@latest pockly-client --template react-ts`.
 - [ ] Cài đặt dependencies Frontend: Tailwind CSS, shadcn/ui, Recharts, Zustand, date-fns.
 - [ ] Cấu hình shadcn/ui (Claude design system): theme, color tokens, typography.
