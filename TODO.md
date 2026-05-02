@@ -100,9 +100,9 @@
 - [x] Không xoá danh mục đã có giao dịch (chỉ ẩn).
 
 #### 5.6 Xuất dữ liệu CSV
-- [ ] Nút Export trong Settings.
-- [ ] Lọc khoảng thời gian trước khi export.
-- [ ] Generate và download file `.csv` phía client.
+- [x] Nút Export trong Settings.
+- [x] Lọc khoảng thời gian trước khi export.
+- [x] Generate và download file `.csv` phía client.
 
 ---
 
