@@ -116,7 +116,7 @@
 ---
 
 ### 7. **Kiểm thử & Hoàn thiện**
-- [ ] Test toàn bộ CRUD giao dịch (thêm, sửa, xoá, lọc).
+- [x] Test toàn bộ CRUD giao dịch (thêm, sửa, xoá, lọc).
 - [ ] Test logic tính toán thống kê (tổng thu/chi, số dư, breakdown).
 - [ ] Test cảnh báo budget ở các ngưỡng 0%, 80%, 100%, 120%.
 - [ ] Test LocalStorage: lưu đúng, đọc đúng sau khi reload trang.

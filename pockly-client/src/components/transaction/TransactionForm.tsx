@@ -10,19 +10,24 @@ import { format } from 'date-fns';
 
 interface TransactionFormProps {
   onSuccess?: () => void;
+  initialData?: Transaction;
 }
 
-export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) => {
-  const [type, setType] = useState<'income' | 'expense'>('expense');
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('');
-  const [note, setNote] = useState('');
-  const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
+export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, initialData }) => {
+  const [type, setType] = useState<'income' | 'expense'>(initialData?.type || 'expense');
+  const [amount, setAmount] = useState(initialData?.amount.toString() || '');
+  const [category, setCategory] = useState(initialData?.category || '');
+  const [note, setNote] = useState(initialData?.note || '');
+  const [date, setDate] = useState(
+    initialData 
+      ? format(new Date(initialData.date), "yyyy-MM-dd'T'HH:mm")
+      : format(new Date(), "yyyy-MM-dd'T'HH:mm")
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const amountInputRef = useRef<HTMLInputElement>(null);
-  const { addTransaction } = useTransactionStore();
+  const { addTransaction, updateTransaction } = useTransactionStore();
   const { categories, loadCategories } = useCategoryStore();
 
   useEffect(() => {
@@ -43,7 +48,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) =
 
     setIsSubmitting(true);
 
-    const transaction = {
+    const transactionData = {
       type,
       amount: parseFloat(amount),
       category,
@@ -51,17 +56,24 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess }) =
       date: new Date(date).toISOString(),
     };
 
-    const result = await addTransaction(transaction);
+    let result;
+    if (initialData) {
+      result = await updateTransaction(initialData.id, transactionData);
+    } else {
+      result = await addTransaction(transactionData);
+    }
 
     if (result) {
-      // Reset form
-      setAmount('');
-      setNote('');
-      setDate(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
+      // Reset form if adding
+      if (!initialData) {
+        setAmount('');
+        setNote('');
+        setDate(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
+      }
 
       // Check budget alerts for expense transactions
-      if (transaction.type === 'expense') {
-        checkBudgetAlerts(transaction.amount, transaction.category);
+      if (transactionData.type === 'expense') {
+        checkBudgetAlerts(transactionData.amount, transactionData.category);
       }
 
       // Show success animation
