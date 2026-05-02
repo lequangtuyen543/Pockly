@@ -49,17 +49,17 @@
 ---
 
 ### 4. **Thiết lập Frontend (React + Vite + Tailwind + shadcn/ui)**
-- [ ] Cấu hình Tailwind CSS (`tailwind.config.ts`), custom color palette Pockly.
-- [ ] Cài đặt và cấu hình shadcn/ui components: Button, Input, Dialog, Select, Progress, Badge.
-- [ ] Tạo các Layout cơ bản:
-  - [ ] `AppLayout` — layout chính với bottom navigation (mobile).
-  - [ ] `FullscreenLayout` — cho màn hình nhập liệu nhanh.
-- [ ] Cấu hình React Router: định nghĩa các routes trong `src/routes/index.tsx`.
-- [ ] Xây dựng LocalStorage layer (`src/lib/storage.ts`): CRUD helpers, schema validation.
-- [ ] Xây dựng Zustand stores:
-  - [ ] `transactionStore.ts` — danh sách giao dịch, CRUD actions.
-  - [ ] `categoryStore.ts` — danh mục, default categories.
-  - [ ] `budgetStore.ts` — ngân sách theo tháng, tính % đã dùng.
+- [x] Cấu hình Tailwind CSS (`tailwind.config.ts`), custom color palette Pockly.
+- [x] Cài đặt và cấu hình shadcn/ui components: Button, Input, Dialog, Select, Progress, Badge.
+- [x] Tạo các Layout cơ bản:
+  - [x] `AppLayout` — layout chính với bottom navigation (mobile).
+  - [x] `FullscreenLayout` — cho màn hình nhập liệu nhanh.
+- [x] Cấu hình React Router: định nghĩa các routes trong `src/routes/index.tsx`.
+- [x] Xây dựng LocalStorage layer (`src/lib/storage.ts`): CRUD helpers, schema validation.
+- [x] Xây dựng Zustand stores:
+  - [x] `transactionStore.ts` — danh sách giao dịch, CRUD actions.
+  - [x] `categoryStore.ts` — danh mục, default categories.
+  - [x] `budgetStore.ts` — ngân sách theo tháng, tính % đã dùng.
 
 ---
 
