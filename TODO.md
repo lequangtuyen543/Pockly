@@ -40,7 +40,7 @@
   - [x] Category Controller (`category.controller.ts`).
   - [x] Budget Controller (`budget.controller.ts`).
   - [x] Stats Controller (`stats.controller.ts`).
-- [ ] Viết middleware xử lý lỗi tập trung (`errorHandler.ts`).
+- [x] Viết middleware xử lý lỗi tập trung (`errorHandler.ts`).
 - [ ] Viết middleware validate input (`validateRequest.ts`).
 - [ ] Viết unit test cơ bản cho controllers (Jest).
 

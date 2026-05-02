@@ -6,6 +6,7 @@ import transactionRoutes from './routes/transaction.routes';
 import categoryRoutes from './routes/category.routes';
 import budgetRoutes from './routes/budget.routes';
 import statsRoutes from './routes/stats.routes';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ app.use('/api/transactions', transactionRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/stats', statsRoutes);
+
+// Error Handling Middleware
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
