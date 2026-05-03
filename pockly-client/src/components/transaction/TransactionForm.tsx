@@ -1,27 +1,23 @@
-// src/components/transaction/TransactionForm.tsx
-import React, { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useTransactionStore } from '@/store/transactionStore';
-import { useCategoryStore } from '@/store/categoryStore';
-import { useBudgetStore } from '@/store/budgetStore';
-import { format } from 'date-fns';
+import React, { useState, useEffect, useRef } from "react";
+import { useTransactionStore } from "@/store/transactionStore";
+import { useCategoryStore } from "@/store/categoryStore";
+import { useBudgetStore } from "@/store/budgetStore";
+import { format } from "date-fns";
 
 interface TransactionFormProps {
   onSuccess?: () => void;
-  initialData?: Transaction;
+  initialData?: any;
 }
 
 export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, initialData }) => {
-  const [type, setType] = useState<'income' | 'expense'>(initialData?.type || 'expense');
-  const [amount, setAmount] = useState(initialData?.amount.toString() || '');
-  const [category, setCategory] = useState(initialData?.category || '');
-  const [note, setNote] = useState(initialData?.note || '');
+  const [type, setType] = useState<"income" | "expense">(initialData?.type || "expense");
+  const [amount, setAmount] = useState(initialData?.amount.toString() || "");
+  const [category, setCategory] = useState(initialData?.category || "");
+  const [note, setNote] = useState(initialData?.note || "");
   const [date, setDate] = useState(
-    initialData 
-      ? format(new Date(initialData.date), "yyyy-MM-dd'T'HH:mm")
-      : format(new Date(), "yyyy-MM-dd'T'HH:mm")
+    initialData
+      ? format(new Date(initialData.date), "yyyy-MM-dd")
+      : format(new Date(), "yyyy-MM-dd")
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -35,7 +31,6 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
   }, [loadCategories]);
 
   useEffect(() => {
-    // Auto-focus amount input
     if (amountInputRef.current) {
       amountInputRef.current.focus();
     }
@@ -53,7 +48,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
       amount: parseFloat(amount),
       category,
       note: note.trim() || undefined,
-      date: new Date(date).toISOString(),
+      date: new Date(date + "T12:00:00").toISOString(),
     };
 
     let result;
@@ -64,19 +59,17 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
     }
 
     if (result) {
-      // Reset form if adding
       if (!initialData) {
-        setAmount('');
-        setNote('');
-        setDate(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
+        setAmount("");
+        setNote("");
+        setCategory("");
+        setDate(format(new Date(), "yyyy-MM-dd"));
       }
 
-      // Check budget alerts for expense transactions
-      if (transactionData.type === 'expense') {
+      if (transactionData.type === "expense") {
         checkBudgetAlerts(transactionData.amount, transactionData.category);
       }
 
-      // Show success animation
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 2000);
 
@@ -87,149 +80,213 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
   };
 
   const checkBudgetAlerts = (expenseAmount: number, categoryId: string) => {
-    const currentMonth = format(new Date(), 'yyyy-MM');
+    const currentMonth = format(new Date(), "yyyy-MM");
     const { getBudgetProgress } = useBudgetStore.getState();
     const { transactions } = useTransactionStore.getState();
 
-    const progress = getBudgetProgress(currentMonth, [...transactions, {
-      type: 'expense',
-      amount: expenseAmount,
-      category: categoryId,
-      date: new Date().toISOString(),
-    }]);
+    const progress = getBudgetProgress(currentMonth, [
+      ...transactions,
+      {
+        type: "expense",
+        amount: expenseAmount,
+        category: categoryId,
+        date: new Date().toISOString(),
+      },
+    ]);
 
-    // Check total budget
     if (progress.percentage >= 100 && progress.used - expenseAmount < progress.total) {
-      // Just crossed 100%
-      showBudgetNotification('Vượt quá ngân sách!', `Bạn vừa vượt quá hạn mức tháng này.`);
+      showBudgetNotification("Vượt quá ngân sách!", `Bạn vừa vượt quá hạn mức tháng này.`);
     } else if (progress.percentage >= 80 && progress.used - expenseAmount < progress.total * 0.8) {
-      // Just crossed 80%
-      showBudgetNotification('Cảnh báo ngân sách', `Bạn đã chi ${progress.percentage.toFixed(1)}% hạn mức tháng này.`);
+      showBudgetNotification("Cảnh báo ngân sách", `Bạn đã chi ${progress.percentage.toFixed(1)}% hạn mức tháng này.`);
     }
 
-    // Check category budget
     const categoryProgress = progress.categoryProgress[categoryId];
     if (categoryProgress && categoryProgress.percentage >= 100 &&
         categoryProgress.used - expenseAmount < categoryProgress.limit) {
-      showBudgetNotification('Vượt quá ngân sách danh mục!', `Danh mục này đã vượt quá hạn mức.`);
+      showBudgetNotification("Vượt quá ngân sách danh mục!", `Danh mục này đã vượt quá hạn mức.`);
     } else if (categoryProgress && categoryProgress.percentage >= 80 &&
                categoryProgress.used - expenseAmount < categoryProgress.limit * 0.8) {
-      showBudgetNotification('Cảnh báo danh mục', `Danh mục này đã chi ${categoryProgress.percentage.toFixed(1)}% hạn mức.`);
+      showBudgetNotification("Cảnh báo danh mục", `Danh mục này đã chi ${categoryProgress.percentage.toFixed(1)}% hạn mức.`);
     }
   };
 
   const showBudgetNotification = (title: string, body: string) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
+    if ("Notification" in window && Notification.permission === "granted") {
       new Notification(`Pockly - ${title}`, {
         body,
-        icon: '/favicon.ico',
+        icon: "/favicon.ico",
       });
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       handleSubmit(e as any);
     }
   };
 
+  const filteredCategories = categories.filter((cat) => !cat.hidden);
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 pb-24">
       {/* Success Animation */}
       {showSuccess && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="bg-green-500 text-white px-6 py-3 rounded-lg animate-bounce">
-            ✅ Giao dịch đã được lưu!
+            Giao dịch đã được lưu!
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Type Toggle */}
-        <div className="flex gap-2">
-          <Button
+      <form onSubmit={handleSubmit} className="space-y-lg">
+        {/* Transaction Type Toggle */}
+        <div className="flex p-1 rounded-xl" style={{ backgroundColor: "#e2dfda" }}>
+          <button
             type="button"
-            variant={type === 'expense' ? 'default' : 'outline'}
-            onClick={() => setType('expense')}
-            className="flex-1"
+            onClick={() => {
+              setType("expense");
+              setCategory("");
+            }}
+            className="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200"
+            style={
+              type === "expense"
+                ? { backgroundColor: "#ffffff", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", color: "#1c1c19" }
+                : { color: "#a8a29e" }
+            }
           >
-            Chi tiêu
-          </Button>
-          <Button
+            Expense
+          </button>
+          <button
             type="button"
-            variant={type === 'income' ? 'default' : 'outline'}
-            onClick={() => setType('income')}
-            className="flex-1"
+            onClick={() => {
+              setType("income");
+              setCategory("");
+            }}
+            className="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200"
+            style={
+              type === "income"
+                ? { backgroundColor: "#ffffff", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", color: "#1c1c19" }
+                : { color: "#a8a29e" }
+            }
           >
-            Thu nhập
-          </Button>
+            Income
+          </button>
         </div>
 
-        {/* Amount Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Số tiền</label>
-          <Input
-            ref={amountInputRef}
-            type="number"
-            inputMode="numeric"
-            placeholder="0"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="text-lg"
-            min="0"
-            step="0.01"
-            required
-          />
+        {/* Amount Input Section */}
+        <section className="text-center">
+          <label className="font-title-sm text-title-sm text-stone-400 block mb-xs">Amount</label>
+          <div className="relative inline-block">
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 font-display-lg text-display-lg" style={{ color: "#c96442" }}>$</span>
+            <input
+              ref={amountInputRef}
+              type="text"
+              inputMode="numeric"
+              placeholder="0.00"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="bg-transparent border-none focus:ring-0 text-center font-display-lg text-display-lg w-64 placeholder:opacity-30"
+              style={{ color: "#c96442" }}
+            />
+            <div className="h-0.5 w-full mt-1" style={{ backgroundColor: "#c96442", opacity: 0.2 }}></div>
+          </div>
+        </section>
+
+        {/* Category Selection */}
+        <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+          <label className="font-title-sm text-title-sm block mb-md italic" style={{ color: "#231916" }}>Category</label>
+          <div className="grid grid-cols-4 gap-3">
+            {filteredCategories.map((cat) => {
+              const isSelected = category === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setCategory(cat.id)}
+                  className="flex flex-col items-center gap-2 group"
+                >
+                  <div
+                    className="w-12 h-12 rounded-full border flex items-center justify-center transition-all"
+                    style={
+                      isSelected
+                        ? { borderColor: "#c96442", backgroundColor: "#fdeae4" }
+                        : { borderColor: "#e8e6dc", backgroundColor: "transparent" }
+                    }
+                  >
+                    <span className="text-xl">{cat.icon}</span>
+                  </div>
+                  <span
+                    className="font-label-caps text-[10px]"
+                    style={{ color: isSelected ? "#c96442" : "#a8a29e" }}
+                  >
+                    {cat.name.toUpperCase()}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Category Select */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Danh mục</label>
-          <Select value={category} onValueChange={(value) => value !== null && setCategory(value)} required>
-            <SelectTrigger>
-              <SelectValue placeholder="Chọn danh mục" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.filter(cat => !cat.hidden).map((cat) => (
-                <SelectItem key={cat.id} value={cat.id}>
-                  {cat.icon} {cat.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* Date & Note Inputs */}
+        <div className="grid grid-cols-1 gap-md">
+          {/* Date */}
+          <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+            <label className="font-label-caps text-label-caps block mb-sm" style={{ color: "#a8a29e" }}>DATE</label>
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined" style={{ color: "#a8a29e" }}>calendar_today</span>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg w-full"
+                style={{ color: "#231916" }}
+              />
+            </div>
+          </div>
+
+          {/* Note */}
+          <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+            <label className="font-label-caps text-label-caps block mb-sm" style={{ color: "#a8a29e" }}>NOTE</label>
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined" style={{ color: "#a8a29e" }}>edit_note</span>
+              <input
+                type="text"
+                placeholder="Add a description..."
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg w-full placeholder:text-stone-300"
+                style={{ color: "#231916" }}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Note Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Ghi chú (tùy chọn)</label>
-          <Input
-            type="text"
-            placeholder="Thêm ghi chú..."
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-        </div>
-
-        {/* Date Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Thời gian</label>
-          <Input
-            type="datetime-local"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting || !amount || !category}
+        {/* Optional Attachment Card */}
+        <div
+          className="bg-[#faf9f5] border border-dashed rounded-xl p-lg flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors hover:border-[#c96442] group"
+          style={{ borderColor: "#e8e6dc" }}
+          onClick={() => {}}
         >
-          {isSubmitting ? 'Đang lưu...' : 'Lưu giao dịch'}
-        </Button>
+          <span className="material-symbols-outlined text-3xl" style={{ color: "#a8a29e" }}>add_a_photo</span>
+          <span className="font-label-caps text-label-caps" style={{ color: "#a8a29e" }}>ATTACH RECEIPT</span>
+        </div>
+
+        {/* Action Button */}
+        <div className="mt-xl pb-lg">
+          <button
+            type="submit"
+            disabled={isSubmitting || !amount || !category}
+            className="w-full text-white py-4 rounded-xl font-label-caps text-body-lg tracking-widest active:scale-[0.98] transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              backgroundColor: "#c96442",
+              boxShadow: "0 10px 15px -3px rgba(201, 100, 66, 0.2)",
+            }}
+          >
+            {isSubmitting ? "SAVING..." : "SAVE TRANSACTION"}
+          </button>
+        </div>
       </form>
     </div>
   );

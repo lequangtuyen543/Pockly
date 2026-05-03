@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
 import { useAppStore } from "./store/appStore";
+import { useTransactionStore } from "./store/transactionStore";
 import { OnboardingFlow } from "./components/onboarding/OnboardingFlow";
 import Dashboard from "./pages/Dashboard";
 import { MainLayout } from "./components/layouts/MainLayout";
+import { AddLayout } from "./components/layouts/AddLayout";
 import { CategoryManager } from "./components/category/CategoryManager";
 import { Settings } from "./components/settings/Settings";
 import { TransactionForm } from "./components/transaction/TransactionForm";
@@ -178,12 +180,9 @@ const SettingsPage = () => (
 );
 
 const AddPage = () => (
-  <MainLayout>
-    <div className="space-y-6">
-      <h2 className="text-headline-md">Thêm giao dịch</h2>
-      <TransactionForm onSuccess={() => window.location.href = "/"} />
-    </div>
-  </MainLayout>
+  <AddLayout title="Add Transaction" showClose={true}>
+    <TransactionForm onSuccess={() => window.location.href = "/"} />
+  </AddLayout>
 );
 
 const EditPage = () => {
@@ -196,15 +195,12 @@ const EditPage = () => {
   }
 
   return (
-    <MainLayout>
-      <div className="space-y-6">
-        <h2 className="text-headline-md">Sửa giao dịch</h2>
-        <TransactionForm 
-          initialData={transaction} 
-          onSuccess={() => window.location.href = "/history"} 
-        />
-      </div>
-    </MainLayout>
+    <AddLayout title="Edit Transaction" showClose={true}>
+      <TransactionForm
+        initialData={transaction}
+        onSuccess={() => window.location.href = "/history"}
+      />
+    </AddLayout>
   );
 };
 
