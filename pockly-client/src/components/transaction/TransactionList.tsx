@@ -1,19 +1,19 @@
 // src/components/transaction/TransactionList.tsx
 import React, { useState, useEffect, useMemo } from 'react';
-import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
+import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TransactionItem } from './TransactionItem';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { filterTransactions } from '@/lib/transactionFilter';
+import type { FilterPeriod } from '@/lib/transactionFilter';
 import type { Transaction } from '@/lib/storage';
 
 interface TransactionListProps {
   onEditTransaction?: (transaction: Transaction) => void;
 }
-
-type FilterPeriod = 'day' | 'week' | 'month' | 'all';
 
 export const TransactionList: React.FC<TransactionListProps> = ({ onEditTransaction }) => {
   const [filterPeriod, setFilterPeriod] = useState<FilterPeriod>('all');
@@ -29,52 +29,11 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onEditTransact
   }, [loadTransactions, loadCategories]);
 
   const filteredTransactions = useMemo(() => {
-    let filtered = [...transactions];
-
-    // Filter by period
-    if (filterPeriod !== 'all') {
-      const now = new Date();
-      let start: Date, end: Date;
-
-      switch (filterPeriod) {
-        case 'day':
-          start = startOfDay(now);
-          end = endOfDay(now);
-          break;
-        case 'week':
-          start = startOfWeek(now, { weekStartsOn: 1 }); // Monday
-          end = endOfWeek(now, { weekStartsOn: 1 });
-          break;
-        case 'month':
-          start = startOfMonth(now);
-          end = endOfMonth(now);
-          break;
-        default:
-          start = new Date(0);
-          end = new Date();
-      }
-
-      filtered = filtered.filter(t =>
-        isWithinInterval(new Date(t.date), { start, end })
-      );
-    }
-
-    // Filter by category
-    if (filterCategory !== 'all') {
-      filtered = filtered.filter(t => t.category === filterCategory);
-    }
-
-    // Search by amount or note
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(t =>
-        t.amount.toString().includes(query) ||
-        (t.note && t.note.toLowerCase().includes(query))
-      );
-    }
-
-    // Sort by date descending
-    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return filterTransactions(transactions, {
+      period: filterPeriod,
+      category: filterCategory,
+      searchQuery,
+    });
   }, [transactions, filterPeriod, filterCategory, searchQuery]);
 
   const groupedTransactions = useMemo(() => {

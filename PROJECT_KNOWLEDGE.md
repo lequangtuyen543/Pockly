@@ -26,6 +26,15 @@ Cấu trúc JSON (LocalStorage):
 - `/src/store/`: Các store của Zustand (transactionStore, categoryStore, budgetStore).
 - `/src/lib/`: Các hàm tiện ích (storage, calculations, export CSV).
 
+### C. Tài liệu chi tiết (Docs)
+AI Agent nên đọc thêm các tài liệu trong `docs/` để hiểu rõ:
+- `docs/01-project-overview.md` — tổng quan dự án, mục tiêu và phạm vi.
+- `docs/02-requirements.md` — yêu cầu tính năng chi tiết và các giới hạn của MVP.
+- `docs/03-database-design.md` — thiết kế dữ liệu / cấu trúc lưu trữ.
+- `docs/04-api-design.md` — kiến trúc backend và API (dù MVP hiện tại phụ thuộc LocalStorage).
+- `docs/05-ui-structure.md` — cấu trúc giao diện, layout và các component chính.
+- `docs/06-system-flow.md` — luồng hệ thống và hành trình người dùng.
+
 ## 3. 🛠️ Quy Trình Làm Việc Với Agent (Vibe Coding Workflow)
 Yêu cầu Agent tuân thủ các bước:
 1. **Tiếp nhận ngữ cảnh:** Luôn đọc file này và `PRD.md` để hiểu yêu cầu và giới hạn của MVP.
