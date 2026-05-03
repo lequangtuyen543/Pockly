@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/add',
-    element: <FullscreenLayout><AddTransaction /></FullscreenLayout>,
+    element: <AppLayout><AddTransaction /></AppLayout>,
   },
   {
     path: '/stats',

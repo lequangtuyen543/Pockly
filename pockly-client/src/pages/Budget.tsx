@@ -96,7 +96,7 @@ const BudgetPage = () => {
 
   return (
     <MainLayout>
-      <div className="px-margin-mobile pt-lg flex flex-col gap-xl pb-24">
+      <div className="flex flex-col gap-10">
       {/* Main Header */}
       <div className="flex flex-col gap-xs">
         <h1 className="font-display-lg text-display-lg" style={{ color: "#c96442" }}>Budgets</h1>
@@ -104,7 +104,7 @@ const BudgetPage = () => {
       </div>
 
       {/* Monthly Overview Card */}
-      <section className="bg-[#faf9f5] p-lg ring-1 ring-black/5 rounded-xl">
+      <section className="card-ivory p-6 rounded-xl ring-subtle">
         <div className="flex justify-between items-end mb-md">
           <div>
             <h2 className="font-label-caps text-label-caps uppercase" style={{ color: "#5f5e5a" }}>Total Monthly Budget</h2>
@@ -139,14 +139,14 @@ const BudgetPage = () => {
         </div>
         <div className="grid grid-cols-1 gap-md">
           {categoryCards.map((cat) => (
-            <div key={cat.id} className="bg-[#faf9f5] p-md rounded-xl" style={{ border: "1px solid #e8e6dc" }}>
+            <div key={cat.id} className="card-ivory p-4 rounded-xl ring-subtle">
               <div className="flex justify-between mb-sm">
                 <div className="flex items-center gap-sm">
                   <span className="material-symbols-outlined" style={{ color: "#5f5e5a" }}>{cat.icon}</span>
                   <span className="font-body-lg font-medium">{cat.name}</span>
                 </div>
                 <span className="font-body-sm" style={cat.left < 0 ? { color: "#c96442" } : { color: "#5f5e5a" }}>
-                  {cat.left >= 0 ? `$${cat.left.toFixed(0)} left` : `-$${Math.abs(cat.left).toFixed(0)} over`}
+                  {cat.left >= 0 ? `${formatCurrency(cat.left)} còn lại` : `${formatCurrency(Math.abs(cat.left))} quá mức`}
                 </span>
               </div>
               <div className="w-full h-2 rounded-full overflow-hidden mb-xs" style={{ backgroundColor: "#e2dfda" }}>
@@ -174,16 +174,16 @@ const BudgetPage = () => {
       {/* Budget Setup Form - Always Visible */}
       <section className="flex flex-col gap-md">
         <h3 className="font-title-sm text-title-sm text-on-surface">Cài đặt ngân sách tháng {currentMonth}</h3>
-        <div className="bg-[#faf9f5] p-lg rounded-xl" style={{ border: "1px solid #e8e6dc" }}>
+        <div className="card-ivory p-6 rounded-xl ring-subtle">
           <div className="flex flex-col gap-md">
             {/* Total Budget */}
             <div className="flex flex-col gap-xs">
               <label className="font-serif text-body-sm text-on-surface">Total Budget</label>
               <div className="relative">
-                <span className="absolute left-md top-1/2 -translate-y-1/2" style={{ color: "#5f5e5a" }}>$</span>
+                <span className="absolute left-md top-1/2 -translate-y-1/2" style={{ color: "#5f5e5a" }}>₫</span>
                 <input
                   type="number"
-                  placeholder="0.00"
+                  placeholder="0"
                   value={totalBudget}
                   onChange={(e) => setTotalBudget(e.target.value)}
                   className="w-full h-12 border rounded-lg pl-8 pr-md focus:border-[#c96442] focus:ring-0 font-body-sm text-on-surface bg-transparent"

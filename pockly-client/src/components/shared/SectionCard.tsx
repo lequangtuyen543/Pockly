@@ -10,11 +10,11 @@ export const SectionCard: React.FC<SectionCardProps> = ({ children, className = 
   const paddingClass = {
     sm: 'p-4',
     md: 'p-6',
-    lg: 'p-lg',
+    lg: 'p-6',
   }[padding];
 
   return (
-    <div className={`bg-[#faf9f5] border border-[#e8e6dc] rounded-xl ring-1 ring-black/5 ${paddingClass} ${className}`}>
+    <div className={`card-ivory rounded-xl ring-subtle ${paddingClass} ${className}`}>
       {children}
     </div>
   );

@@ -102,10 +102,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
 
     const categoryProgress = progress.categoryProgress[categoryId];
     if (categoryProgress && categoryProgress.percentage >= 100 &&
-        categoryProgress.used - expenseAmount < categoryProgress.limit) {
+      categoryProgress.used - expenseAmount < categoryProgress.limit) {
       showBudgetNotification("Vượt quá ngân sách danh mục!", `Danh mục này đã vượt quá hạn mức.`);
     } else if (categoryProgress && categoryProgress.percentage >= 80 &&
-               categoryProgress.used - expenseAmount < categoryProgress.limit * 0.8) {
+      categoryProgress.used - expenseAmount < categoryProgress.limit * 0.8) {
       showBudgetNotification("Cảnh báo danh mục", `Danh mục này đã chi ${categoryProgress.percentage.toFixed(1)}% hạn mức.`);
     }
   };
@@ -177,12 +177,12 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
         <section className="text-center">
           <label className="font-title-sm text-title-sm text-stone-400 block mb-xs">Amount</label>
           <div className="relative inline-block">
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 font-display-lg text-display-lg" style={{ color: "#c96442" }}>$</span>
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 font-display-lg text-display-lg" style={{ color: "#c96442" }}>vnd</span>
             <input
               ref={amountInputRef}
               type="text"
               inputMode="numeric"
-              placeholder="0.00"
+              placeholder="50.000"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -194,7 +194,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
         </section>
 
         {/* Category Selection */}
-        <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+        <div className="card-ivory rounded-xl p-4 ring-subtle">
           <label className="font-title-sm text-title-sm block mb-md italic" style={{ color: "#231916" }}>Category</label>
           <div className="grid grid-cols-4 gap-3">
             {filteredCategories.map((cat) => {
@@ -231,7 +231,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
         {/* Date & Note Inputs */}
         <div className="grid grid-cols-1 gap-md">
           {/* Date */}
-          <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+          <div className="card-ivory rounded-xl p-4 ring-subtle">
             <label className="font-label-caps text-label-caps block mb-sm" style={{ color: "#a8a29e" }}>DATE</label>
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined" style={{ color: "#a8a29e" }}>calendar_today</span>
@@ -246,7 +246,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
           </div>
 
           {/* Note */}
-          <div className="bg-[#faf9f5] border rounded-xl p-md" style={{ borderColor: "#e8e6dc" }}>
+          <div className="card-ivory rounded-xl p-4 ring-subtle">
             <label className="font-label-caps text-label-caps block mb-sm" style={{ color: "#a8a29e" }}>NOTE</label>
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined" style={{ color: "#a8a29e" }}>edit_note</span>
@@ -265,9 +265,8 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, ini
 
         {/* Optional Attachment Card */}
         <div
-          className="bg-[#faf9f5] border border-dashed rounded-xl p-lg flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors hover:border-[#c96442] group"
-          style={{ borderColor: "#e8e6dc" }}
-          onClick={() => {}}
+          className="card-ivory border-dashed rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors hover:border-[#c96442] group"
+          onClick={() => { }}
         >
           <span className="material-symbols-outlined text-3xl" style={{ color: "#a8a29e" }}>add_a_photo</span>
           <span className="font-label-caps text-label-caps" style={{ color: "#a8a29e" }}>ATTACH RECEIPT</span>

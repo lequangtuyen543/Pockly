@@ -7,7 +7,7 @@ interface PageContainerProps {
 
 export const PageContainer: React.FC<PageContainerProps> = ({ children, className = '' }) => {
   return (
-    <div className={`pb-24 pt-8 px-margin-mobile max-w-2xl mx-auto ${className}`}>
+    <div className={`flex flex-col gap-10 ${className}`}>
       {children}
     </div>
   );

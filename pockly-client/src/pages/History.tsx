@@ -98,11 +98,11 @@ const HistoryPage = () => {
 
   const getCategoryName = (categoryId: string): string => {
     const cat = categories.find(c => c.id === categoryId);
-    return cat ? cat.name : categoryId;
+    return cat ? cat.name : "Unknown";
   };
 
   return (
-    <div className="pb-24 pt-8 px-margin-mobile max-w-2xl mx-auto">
+    <div className="flex flex-col gap-10">
       {/* Header */}
       <div className="mb-xl">
         <h1 className="font-headline-md text-headline-md" style={{ color: "#c96442" }}>History</h1>
@@ -130,7 +130,7 @@ const HistoryPage = () => {
 
       {/* Insight Card */}
       <div className="mt-xl grid grid-cols-12 gap-gutter">
-        <div className="col-span-12 bg-[#faf9f5] border border-[#e8e6dc] rounded-xl p-lg ring-1 ring-black/5 relative overflow-hidden">
+        <div className="col-span-12 card-ivory rounded-xl p-6 ring-subtle relative overflow-hidden">
           <div className="relative z-10">
             <h3 className="font-headline-md text-title-sm" style={{ color: "#c96442" }}>Weekly Summary</h3>
             <p className="font-body-sm text-body-sm max-w-[70%]" style={{ color: "#5f5e5a" }}>

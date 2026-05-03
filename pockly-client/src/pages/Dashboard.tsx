@@ -66,10 +66,11 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
+      <div className="flex flex-col gap-10">
       {/* ── Export Reminder Banner ── */}
       {showExportReminder && (
         <div
-          className="mb-8 p-5 rounded-2xl flex items-start justify-between relative overflow-hidden"
+          className="p-5 rounded-2xl flex items-start justify-between relative overflow-hidden"
           style={{ backgroundColor: "rgba(201,100,66,0.06)", border: "1px solid rgba(201,100,66,0.15)" }}
         >
           {/* Subtle background decoration */}
@@ -119,7 +120,7 @@ const Dashboard = () => {
       )}
 
       {/* ── Section: Greeting ── */}
-      <section className="mb-10">
+      <section>
         <p className="text-label-caps mb-1" style={{ color: "#5f5e5a" }}>
           Welcome back,
         </p>
@@ -129,7 +130,7 @@ const Dashboard = () => {
       </section>
 
       {/* ── Section: Bento Summary Grid ── */}
-      <div className="grid grid-cols-2 gap-4 mb-10">
+      <div className="grid grid-cols-2 gap-4">
 
         {/* Balance card — full width */}
         <div
@@ -189,7 +190,7 @@ const Dashboard = () => {
       </div>
 
       {/* ── Section: Weekly Activity Bar Chart ── */}
-      <section className="mb-10">
+      <section>
         <div className="flex justify-between items-end mb-4">
           <h3 className="text-title-sm" style={{ color: "#231916" }}>
             Weekly Activity
@@ -295,6 +296,7 @@ const Dashboard = () => {
           )}
         </div>
       </section>
+      </div>
     </MainLayout>
   );
 };

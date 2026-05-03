@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+import { formatCurrency } from "./lib/utils";
 import { useAppStore } from "./store/appStore";
 import { useTransactionStore } from "./store/transactionStore";
 import { OnboardingFlow } from "./components/onboarding/OnboardingFlow";
@@ -13,7 +14,7 @@ import BudgetPage from "./pages/Budget";
 
 const StatsPage = () => (
   <MainLayout>
-    <div className="pt-4 space-y-xl">
+    <div className="flex flex-col gap-10">
       {/* Page Header */}
       <section>
         <h1 className="font-headline-md text-headline-md text-on-surface">Analytics</h1>
@@ -22,14 +23,13 @@ const StatsPage = () => (
 
       {/* Summary Cards Bento Grid */}
       <section className="grid grid-cols-2 gap-md">
-        <div className="bg-[#faf9f5] p-md rounded-xl ring-elevation">
+        <div className="card-ivory p-6 rounded-xl ring-subtle">
           <span className="font-label-caps text-label-caps text-secondary">TOTAL SPENT</span>
           <div className="mt-2 flex items-baseline gap-1">
-            <span className="font-headline-md text-headline-md text-primary">$4,280</span>
-            <span className="font-body-sm text-body-sm text-primary">.00</span>
+            <span className="font-headline-md text-headline-md text-primary">{formatCurrency(4280000)}</span>
           </div>
         </div>
-        <div className="bg-[#faf9f5] p-md rounded-xl ring-elevation">
+        <div className="card-ivory p-6 rounded-xl ring-subtle">
           <span className="font-label-caps text-label-caps text-secondary">SAVINGS RATE</span>
           <div className="mt-2 flex items-baseline gap-1">
             <span className="font-headline-md text-headline-md text-on-surface">24%</span>
@@ -69,7 +69,7 @@ const StatsPage = () => (
       </section>
 
       {/* Category Breakdown List */}
-      <section className="bg-[#faf9f5] rounded-xl ring-elevation overflow-hidden mb-8">
+      <section className="card-ivory rounded-xl ring-subtle overflow-hidden mb-8">
         <div className="p-md border-b border-[#e8e6dc]">
           <h2 className="font-title-sm text-title-sm text-on-surface">Category Breakdown</h2>
         </div>
@@ -86,7 +86,7 @@ const StatsPage = () => (
               </div>
             </div>
             <div className="text-right">
-              <p className="font-body-lg text-body-lg text-on-surface font-semibold">$1,926.00</p>
+              <p className="font-body-lg text-body-lg text-on-surface font-semibold">{formatCurrency(1926000)}</p>
               <div className="w-24 h-1.5 bg-[#e8e6dc] rounded-full mt-1 overflow-hidden">
                 <div className="bg-[#c96442] h-full" style={{ width: "45%" }}></div>
               </div>
@@ -104,7 +104,7 @@ const StatsPage = () => (
               </div>
             </div>
             <div className="text-right">
-              <p className="font-body-lg text-body-lg text-on-surface font-semibold">$1,070.00</p>
+              <p className="font-body-lg text-body-lg text-on-surface font-semibold">{formatCurrency(1070000)}</p>
               <div className="w-24 h-1.5 bg-[#e8e6dc] rounded-full mt-1 overflow-hidden">
                 <div className="bg-[#d97a5a] h-full" style={{ width: "25%" }}></div>
               </div>
@@ -122,7 +122,7 @@ const StatsPage = () => (
               </div>
             </div>
             <div className="text-right">
-              <p className="font-body-lg text-body-lg text-on-surface font-semibold">$642.00</p>
+              <p className="font-body-lg text-body-lg text-on-surface font-semibold">{formatCurrency(642000)}</p>
               <div className="w-24 h-1.5 bg-[#e8e6dc] rounded-full mt-1 overflow-hidden">
                 <div className="bg-[#e8e6dc] h-full" style={{ width: "15%" }}></div>
               </div>
@@ -140,7 +140,7 @@ const StatsPage = () => (
               </div>
             </div>
             <div className="text-right">
-              <p className="font-body-lg text-body-lg text-on-surface font-semibold">$642.00</p>
+              <p className="font-body-lg text-body-lg text-on-surface font-semibold">{formatCurrency(642000)}</p>
               <div className="w-24 h-1.5 bg-[#e8e6dc] rounded-full mt-1 overflow-hidden">
                 <div className="bg-[#5f5e5a] h-full" style={{ width: "15%" }}></div>
               </div>
@@ -198,9 +198,9 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/budget" element={<BudgetPage />} />
-        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/history" element={<MainLayout><HistoryPage /></MainLayout>} />
         <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings" element={<MainLayout><SettingsPage /></MainLayout>} />
         <Route path="/add" element={<AddPage />} />
         <Route path="/edit/:id" element={<EditPage />} />
         {/* Fallback to home */}

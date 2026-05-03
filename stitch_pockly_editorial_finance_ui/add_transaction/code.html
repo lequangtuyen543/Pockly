@@ -1,232 +1,279 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                "on-primary-fixed": "#390b00",
-                "on-primary": "#ffffff",
-                "secondary": "#5f5e5a",
-                "surface-container": "#fdeae4",
-                "inverse-primary": "#ffb59d",
-                "on-secondary-container": "#64635e",
-                "on-secondary-fixed": "#1c1c19",
-                "error-container": "#ffdad6",
-                "secondary-fixed-dim": "#c9c6c1",
-                "on-primary-container": "#fffbff",
-                "on-tertiary-fixed-variant": "#004f50",
-                "primary-container": "#b95837",
-                "error": "#ba1a1a",
-                "on-surface": "#231916",
-                "primary": "#9a4021",
-                "secondary-container": "#e2dfda",
-                "background": "#fff8f6",
-                "tertiary-container": "#008283",
-                "on-secondary-fixed-variant": "#474743",
-                "surface-dim": "#e9d6d1",
-                "surface": "#fff8f6",
-                "on-error": "#ffffff",
-                "on-tertiary": "#ffffff",
-                "outline-variant": "#dcc1b8",
-                "surface-bright": "#fff8f6",
-                "on-primary-fixed-variant": "#7e2c0e",
-                "on-secondary": "#ffffff",
-                "outline": "#89726b",
-                "secondary-fixed": "#e5e2dd",
-                "inverse-surface": "#392e2b",
-                "surface-container-lowest": "#ffffff",
-                "surface-tint": "#9d4324",
-                "surface-variant": "#f1dfd9",
-                "inverse-on-surface": "#ffede8",
-                "primary-fixed": "#ffdbd0",
-                "on-background": "#231916",
-                "on-error-container": "#93000a",
-                "primary-fixed-dim": "#ffb59d",
-                "surface-container-highest": "#f1dfd9",
-                "on-tertiary-fixed": "#002020",
-                "tertiary-fixed-dim": "#6cd7d8",
-                "tertiary-fixed": "#89f4f4",
-                "tertiary": "#006768",
-                "surface-container-high": "#f7e4df",
-                "on-tertiary-container": "#f3fffe",
-                "on-surface-variant": "#56423c",
-                "surface-container-low": "#fff1ed"
-            },
-            "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-            },
-            "spacing": {
-                "md": "16px",
-                "xs": "4px",
-                "xl": "40px",
-                "gutter": "12px",
-                "margin-mobile": "20px",
-                "unit": "4px",
-                "sm": "8px",
-                "lg": "24px"
-            },
-            "fontFamily": {
-                "title-sm": ["Newsreader"],
-                "label-caps": ["Inter"],
-                "body-lg": ["Inter"],
-                "display-lg": ["Newsreader"],
-                "headline-md": ["Newsreader"],
-                "body-sm": ["Inter"]
-            },
-            "fontSize": {
-                "title-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
-                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
-                "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "400"}],
-                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#390b00",
+            "on-primary": "#ffffff",
+            "secondary": "#5f5e5a",
+            "surface-container": "#fdeae4",
+            "inverse-primary": "#ffb59d",
+            "on-secondary-container": "#64635e",
+            "on-secondary-fixed": "#1c1c19",
+            "error-container": "#ffdad6",
+            "secondary-fixed-dim": "#c9c6c1",
+            "on-primary-container": "#fffbff",
+            "on-tertiary-fixed-variant": "#004f50",
+            "primary-container": "#b95837",
+            "error": "#ba1a1a",
+            "on-surface": "#231916",
+            "primary": "#9a4021",
+            "secondary-container": "#e2dfda",
+            "background": "#fff8f6",
+            "tertiary-container": "#008283",
+            "on-secondary-fixed-variant": "#474743",
+            "surface-dim": "#e9d6d1",
+            "surface": "#fff8f6",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#dcc1b8",
+            "surface-bright": "#fff8f6",
+            "on-primary-fixed-variant": "#7e2c0e",
+            "on-secondary": "#ffffff",
+            "outline": "#89726b",
+            "secondary-fixed": "#e5e2dd",
+            "inverse-surface": "#392e2b",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#9d4324",
+            "surface-variant": "#f1dfd9",
+            "inverse-on-surface": "#ffede8",
+            "primary-fixed": "#ffdbd0",
+            "on-background": "#231916",
+            "on-error-container": "#93000a",
+            "primary-fixed-dim": "#ffb59d",
+            "surface-container-highest": "#f1dfd9",
+            "on-tertiary-fixed": "#002020",
+            "tertiary-fixed-dim": "#6cd7d8",
+            "tertiary-fixed": "#89f4f4",
+            "tertiary": "#006768",
+            "surface-container-high": "#f7e4df",
+            "on-tertiary-container": "#f3fffe",
+            "on-surface-variant": "#56423c",
+            "surface-container-low": "#fff1ed"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "md": "16px",
+            "xs": "4px",
+            "xl": "40px",
+            "gutter": "12px",
+            "margin-mobile": "20px",
+            "unit": "4px",
+            "sm": "8px",
+            "lg": "24px"
+          },
+          "fontFamily": {
+            "title-sm": ["Newsreader"],
+            "label-caps": ["Inter"],
+            "body-lg": ["Inter"],
+            "display-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "title-sm": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
         },
-      }
-    </script>
-<style>
-        .parchment-bg { background-color: #f5f4ed; }
-        .ivory-card { background-color: #faf9f5; }
-        .border-medium { border-color: #e8e6dc; }
-        .terracotta-text { color: #c96442; }
-        .terracotta-bg { background-color: #c96442; }
-        
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-<style>
+      },
+    }
+  </script>
+  <style>
+    .parchment-bg {
+      background-color: #f5f4ed;
+    }
+
+    .ivory-card {
+      background-color: #faf9f5;
+    }
+
+    .border-medium {
+      border-color: #e8e6dc;
+    }
+
+    .terracotta-text {
+      color: #c96442;
+    }
+
+    .terracotta-bg {
+      background-color: #c96442;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+  <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
-  </head>
+</head>
+
 <body class="parchment-bg text-on-surface min-h-screen pb-24">
-<!-- Top AppBar -->
-<header class="bg-[#f5f4ed] border-b border-[#e8e6dc] flex items-center justify-between px-5 h-16 w-full sticky top-0 z-50">
-<div class="flex items-center gap-3">
-<button class="material-symbols-outlined text-stone-500 hover:bg-stone-100 p-2 rounded-full transition-colors" data-icon="close">close</button>
-<h1 class="font-['Newsreader'] serif font-medium text-2xl font-serif font-bold text-[#c96442] tracking-tight">Add Transaction</h1>
-</div>
-<div class="w-10 h-10 rounded-full border border-medium overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young person with a calm expression. The lighting is warm and soft, matching an editorial aesthetic. The background is a clean, neutral parchment color, maintaining a minimalist and high-end feel consistent with a premium financial application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9kY9rJYUa6DyKIwK6o5fjSSriOOSxEtKy2n7GEFJkItVLGufhsmUDfX8GZrDloHbOIcU2D_AInoVEOqqDSfxAXC0shqdKx8WGPF54X9sDb5170gTm8T61b9QoI42xlveDkD0HjYDUitguBQyPv6rPKd3KCwLUaXc2apTXEWaGS0iX-4axTpMym_VOo9CmRzyllGORHAF83hOCpMQYZdGtmAkVxKuYLzJmRVw5N-oJVYDdHS0p4ZzhDJuJ69TAWlr7w_9xBU2f1Ec"/>
-</div>
-</header>
-<main class="max-w-xl mx-auto px-margin-mobile mt-lg">
-<!-- Transaction Type Toggle -->
-<div class="flex p-1 bg-secondary-container rounded-xl mb-xl">
-<button class="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200 bg-white shadow-sm text-stone-900 ring-1 ring-black/5">
-                Expense
-            </button>
-<button class="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200 text-stone-500 hover:text-stone-700">
-                Income
-            </button>
-</div>
-<!-- Amount Input Section -->
-<section class="text-center mb-xl">
-<label class="font-title-sm text-title-sm text-stone-400 block mb-xs">Amount</label>
-<div class="relative inline-block">
-<span class="absolute left-0 top-1/2 -translate-y-1/2 font-display-lg text-display-lg text-[#c96442]">$</span>
-<input autofocus="" class="bg-transparent border-none focus:ring-0 text-center font-display-lg text-display-lg text-[#c96442] w-64 placeholder:opacity-30" placeholder="0.00" type="number"/>
-<div class="h-0.5 w-full bg-[#c96442] opacity-20 mt-1"></div>
-</div>
-</section>
-<!-- Form Fields Grid -->
-<div class="space-y-lg">
-<!-- Category Selection -->
-<div class="ivory-card border border-medium rounded-xl p-md">
-<label class="font-title-sm text-title-sm block mb-md italic">Category</label>
-<div class="grid grid-cols-4 gap-gutter">
-<button class="flex flex-col items-center gap-2 group">
-<div class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
-<span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]" data-icon="restaurant">restaurant</span>
-</div>
-<span class="font-label-caps text-[10px] text-stone-500">FOOD</span>
-</button>
-<button class="flex flex-col items-center gap-2 group">
-<div class="w-12 h-12 rounded-full border border-[#c96442] bg-[#fdeae4] flex items-center justify-center transition-all">
-<span class="material-symbols-outlined text-[#c96442]" data-icon="directions_car">directions_car</span>
-</div>
-<span class="font-label-caps text-[10px] text-[#c96442]">TRAVEL</span>
-</button>
-<button class="flex flex-col items-center gap-2 group">
-<div class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
-<span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]" data-icon="shopping_bag">shopping_bag</span>
-</div>
-<span class="font-label-caps text-[10px] text-stone-500">SHOP</span>
-</button>
-<button class="flex flex-col items-center gap-2 group">
-<div class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
-<span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]" data-icon="more_horiz">more_horiz</span>
-</div>
-<span class="font-label-caps text-[10px] text-stone-500">OTHER</span>
-</button>
-</div>
-</div>
-<!-- Date & Note Inputs -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
-<div class="ivory-card border border-medium rounded-xl p-md">
-<label class="font-label-caps text-label-caps text-stone-400 block mb-sm">DATE</label>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-stone-400" data-icon="calendar_today">calendar_today</span>
-<input class="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg text-on-surface w-full" type="date" value="2023-10-24"/>
-</div>
-</div>
-<div class="ivory-card border border-medium rounded-xl p-md">
-<label class="font-label-caps text-label-caps text-stone-400 block mb-sm">NOTE</label>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-stone-400" data-icon="edit_note">edit_note</span>
-<input class="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg text-on-surface w-full placeholder:text-stone-300" placeholder="Add a description..." type="text"/>
-</div>
-</div>
-</div>
-<!-- Optional Attachment Card -->
-<div class="ivory-card border border-medium border-dashed rounded-xl p-lg flex flex-col items-center justify-center gap-2 text-stone-400 hover:text-[#c96442] hover:border-[#c96442] transition-colors cursor-pointer group">
-<span class="material-symbols-outlined text-3xl" data-icon="add_a_photo">add_a_photo</span>
-<span class="font-label-caps text-label-caps">ATTACH RECEIPT</span>
-</div>
-</div>
-<!-- Action Button -->
-<div class="mt-xl pb-lg">
-<button class="w-full bg-[#c96442] text-white py-4 rounded-xl font-label-caps text-body-lg tracking-widest active:scale-[0.98] transition-transform shadow-lg shadow-[#c96442]/20">
-                SAVE TRANSACTION
-            </button>
-</div>
-</main>
-<!-- BottomNavBar (Suppressed for focused task, but kept as guide for structure if needed) -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-2 bg-[#faf9f5] border-t border-[#e8e6dc] md:hidden">
-<button class="flex flex-col items-center text-stone-400">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Home</span>
-</button>
-<button class="flex flex-col items-center text-stone-400">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Stats</span>
-</button>
-<button class="flex flex-col items-center text-[#c96442] font-bold">
-<span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill">add_circle</span>
-<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Add</span>
-</button>
-<button class="flex flex-col items-center text-stone-400">
-<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Budget</span>
-</button>
-<button class="flex flex-col items-center text-stone-400">
-<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
-<span class="font-sans text-[11px] font-medium uppercase tracking-wider">History</span>
-</button>
-</nav>
-</body></html>
+  <!-- Top AppBar -->
+  <header
+    class="bg-[#f5f4ed] border-b border-[#e8e6dc] flex items-center justify-between px-5 h-16 w-full sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <button class="material-symbols-outlined text-stone-500 hover:bg-stone-100 p-2 rounded-full transition-colors"
+        data-icon="close">close</button>
+      <h1 class="font-['Newsreader'] serif font-medium text-2xl font-serif font-bold text-[#c96442] tracking-tight">Add
+        Transaction</h1>
+    </div>
+    <div class="w-10 h-10 rounded-full border border-medium overflow-hidden">
+      <img class="w-full h-full object-cover"
+        data-alt="A professional studio portrait of a young person with a calm expression. The lighting is warm and soft, matching an editorial aesthetic. The background is a clean, neutral parchment color, maintaining a minimalist and high-end feel consistent with a premium financial application."
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9kY9rJYUa6DyKIwK6o5fjSSriOOSxEtKy2n7GEFJkItVLGufhsmUDfX8GZrDloHbOIcU2D_AInoVEOqqDSfxAXC0shqdKx8WGPF54X9sDb5170gTm8T61b9QoI42xlveDkD0HjYDUitguBQyPv6rPKd3KCwLUaXc2apTXEWaGS0iX-4axTpMym_VOo9CmRzyllGORHAF83hOCpMQYZdGtmAkVxKuYLzJmRVw5N-oJVYDdHS0p4ZzhDJuJ69TAWlr7w_9xBU2f1Ec" />
+    </div>
+  </header>
+  <main class="max-w-xl mx-auto px-margin-mobile mt-lg">
+    <!-- Transaction Type Toggle -->
+    <div class="flex p-1 bg-secondary-container rounded-xl mb-xl">
+      <button
+        class="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200 bg-white shadow-sm text-stone-900 ring-1 ring-black/5">
+        Expense
+      </button>
+      <button
+        class="flex-1 py-3 px-4 rounded-lg font-label-caps text-label-caps transition-all duration-200 text-stone-500 hover:text-stone-700">
+        Income
+      </button>
+    </div>
+    <!-- Amount Input Section -->
+    <section class="text-center mb-xl">
+      <label class="font-title-sm text-title-sm text-stone-400 block mb-xs">Amount</label>
+      <div class="relative inline-block">
+        <span class="absolute left-0 top-1/2 -translate-y-1/2 font-display-lg text-display-lg text-[#c96442]">$</span>
+        <input autofocus=""
+          class="bg-transparent border-none focus:ring-0 text-center font-display-lg text-display-lg text-[#c96442] w-64 placeholder:opacity-30"
+          placeholder="0.00" type="number" />
+        <div class="h-0.5 w-full bg-[#c96442] opacity-20 mt-1"></div>
+      </div>
+    </section>
+    <!-- Form Fields Grid -->
+    <div class="space-y-lg">
+      <!-- Category Selection -->
+      <div class="ivory-card border border-medium rounded-xl p-md">
+        <label class="font-title-sm text-title-sm block mb-md italic">Category</label>
+        <div class="grid grid-cols-4 gap-gutter">
+          <button class="flex flex-col items-center gap-2 group">
+            <div
+              class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
+              <span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]"
+                data-icon="restaurant">restaurant</span>
+            </div>
+            <span class="font-label-caps text-[10px] text-stone-500">FOOD</span>
+          </button>
+          <button class="flex flex-col items-center gap-2 group">
+            <div
+              class="w-12 h-12 rounded-full border border-[#c96442] bg-[#fdeae4] flex items-center justify-center transition-all">
+              <span class="material-symbols-outlined text-[#c96442]" data-icon="directions_car">directions_car</span>
+            </div>
+            <span class="font-label-caps text-[10px] text-[#c96442]">TRAVEL</span>
+          </button>
+          <button class="flex flex-col items-center gap-2 group">
+            <div
+              class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
+              <span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]"
+                data-icon="shopping_bag">shopping_bag</span>
+            </div>
+            <span class="font-label-caps text-[10px] text-stone-500">SHOP</span>
+          </button>
+          <button class="flex flex-col items-center gap-2 group">
+            <div
+              class="w-12 h-12 rounded-full border border-medium flex items-center justify-center group-hover:border-[#c96442] group-hover:bg-[#fdeae4] transition-all">
+              <span class="material-symbols-outlined text-stone-500 group-hover:text-[#c96442]"
+                data-icon="more_horiz">more_horiz</span>
+            </div>
+            <span class="font-label-caps text-[10px] text-stone-500">OTHER</span>
+          </button>
+        </div>
+      </div>
+      <!-- Date & Note Inputs -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+        <div class="ivory-card border border-medium rounded-xl p-md">
+          <label class="font-label-caps text-label-caps text-stone-400 block mb-sm">DATE</label>
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-stone-400" data-icon="calendar_today">calendar_today</span>
+            <input class="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg text-on-surface w-full"
+              type="date" value="2023-10-24" />
+          </div>
+        </div>
+        <div class="ivory-card border border-medium rounded-xl p-md">
+          <label class="font-label-caps text-label-caps text-stone-400 block mb-sm">NOTE</label>
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-stone-400" data-icon="edit_note">edit_note</span>
+            <input
+              class="bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg text-on-surface w-full placeholder:text-stone-300"
+              placeholder="Add a description..." type="text" />
+          </div>
+        </div>
+      </div>
+      <!-- Optional Attachment Card -->
+      <div
+        class="ivory-card border border-medium border-dashed rounded-xl p-lg flex flex-col items-center justify-center gap-2 text-stone-400 hover:text-[#c96442] hover:border-[#c96442] transition-colors cursor-pointer group">
+        <span class="material-symbols-outlined text-3xl" data-icon="add_a_photo">add_a_photo</span>
+        <span class="font-label-caps text-label-caps">ATTACH RECEIPT</span>
+      </div>
+    </div>
+    <!-- Action Button -->
+    <div class="mt-xl pb-lg">
+      <button
+        class="w-full bg-[#c96442] text-white py-4 rounded-xl font-label-caps text-body-lg tracking-widest active:scale-[0.98] transition-transform shadow-lg shadow-[#c96442]/20">
+        SAVE TRANSACTION
+      </button>
+    </div>
+  </main>
+  <!-- BottomNavBar (Suppressed for focused task, but kept as guide for structure if needed) -->
+  <nav
+    class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-2 bg-[#faf9f5] border-t border-[#e8e6dc] md:hidden">
+    <button class="flex flex-col items-center text-stone-400">
+      <span class="material-symbols-outlined" data-icon="home">home</span>
+      <span class="font-sans text-[11px] font-medium uppercase tracking-wider">Home</span>
+    </button>
+    <button class="flex flex-col items-center text-stone-400">
+      <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+      <span class="font-sans text-[11px] font-medium uppercase tracking-wider">Stats</span>
+    </button>
+    <button class="flex flex-col items-center text-[#c96442] font-bold">
+      <span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill">add_circle</span>
+      <span class="font-sans text-[11px] font-medium uppercase tracking-wider">Add</span>
+    </button>
+    <button class="flex flex-col items-center text-stone-400">
+      <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+      <span class="font-sans text-[11px] font-medium uppercase tracking-wider">Budget</span>
+    </button>
+    <button class="flex flex-col items-center text-stone-400">
+      <span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+      <span class="font-sans text-[11px] font-medium uppercase tracking-wider">History</span>
+    </button>
+  </nav>
+</body>
+
+</html>

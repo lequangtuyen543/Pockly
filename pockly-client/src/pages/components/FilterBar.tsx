@@ -47,7 +47,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-[#faf9f5] p-4 rounded-xl mb-xl" style={{ border: '1px solid #e8e6dc' }}>
+      <div className="card-ivory p-4 rounded-xl ring-subtle mb-xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1" style={{ color: '#5f5e5a' }}>

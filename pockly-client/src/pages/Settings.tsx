@@ -19,7 +19,7 @@ const SettingsPage = () => {
 
       {/* Tip Card */}
       <div className="mt-xl grid grid-cols-12 gap-gutter">
-        <div className="col-span-12 bg-[#faf9f5] border border-[#e8e6dc] rounded-xl p-lg ring-1 ring-black/5 relative overflow-hidden">
+        <div className="col-span-12 card-ivory rounded-xl p-6 ring-subtle relative overflow-hidden">
           <div className="relative z-10">
             <h3 className="font-headline-md text-title-sm" style={{ color: '#c96442' }}>Tip</h3>
             <p className="font-body-sm text-body-sm max-w-[70%]" style={{ color: '#5f5e5a' }}>

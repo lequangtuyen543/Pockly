@@ -37,7 +37,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           <h2 className="font-label-caps text-label-caps text-secondary mb-md tracking-widest uppercase">
             {date}
           </h2>
-          <div className="bg-[#faf9f5] border border-[#e8e6dc] rounded-xl overflow-hidden ring-1 ring-black/5">
+          <div className="card-ivory rounded-xl overflow-hidden ring-subtle">
             {dayTransactions.map((transaction, index) => (
               <div key={transaction.id}>
                 <div

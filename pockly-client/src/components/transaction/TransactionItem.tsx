@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
+import { formatCurrency } from '@/lib/utils';
 import type { Transaction } from '@/lib/storage';
 
 interface TransactionItemProps {
@@ -43,14 +44,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, o
       setShowDeleteDialog(false);
       setShowMenu(false);
     }
-  };
-
-  const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(amount);
   };
 
   const formatDate = (dateString: string) => {
@@ -103,7 +96,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, o
           }`}>
             <div className="text-lg">
               {transaction.type === 'income' ? '+' : '-'}
-              {formatAmount(transaction.amount)}
+              {formatCurrency(transaction.amount)}
             </div>
           </div>
         </div>
