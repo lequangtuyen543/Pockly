@@ -32,8 +32,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <div className="flex items-center gap-3">
           {/* Avatar */}
           <div
-            className="w-8 h-8 rounded-full overflow-hidden ring-1"
-            style={{ ringColor: "#e8e6dc" }}
+            className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-[#e8e6dc]"
           >
             <img
               alt="Profile"

@@ -78,7 +78,7 @@ export const BudgetSettings: React.FC<BudgetSettingsProps> = ({ month }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <Button variant="outline" size="sm">
           ⚙️ Cài đặt ngân sách
         </Button>

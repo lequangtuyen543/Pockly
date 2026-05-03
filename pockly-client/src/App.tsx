@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { useAppStore } from "./store/appStore";
 import { useTransactionStore } from "./store/transactionStore";
 import { OnboardingFlow } from "./components/onboarding/OnboardingFlow";
@@ -6,10 +6,10 @@ import Dashboard from "./pages/Dashboard";
 import { MainLayout } from "./components/layouts/MainLayout";
 import { AddLayout } from "./components/layouts/AddLayout";
 import { CategoryManager } from "./components/category/CategoryManager";
-import { Settings } from "./components/settings/Settings";
+import SettingsPage from "./pages/Settings";
 import { TransactionForm } from "./components/transaction/TransactionForm";
-import { TransactionList } from "./components/transaction/TransactionList";
-import { BudgetSettings } from "./components/budget/BudgetSettings";
+import HistoryPage from "./pages/History";
+import BudgetPage from "./pages/Budget";
 
 const StatsPage = () => (
   <MainLayout>
@@ -152,20 +152,6 @@ const StatsPage = () => (
   </MainLayout>
 );
 
-const HistoryPage = () => {
-  const navigate = useNavigate();
-  return (
-    <MainLayout>
-      <TransactionList onEditTransaction={(t) => navigate(`/edit/${t.id}`)} />
-    </MainLayout>
-  );
-};
-
-const BudgetPage = () => (
-  <MainLayout>
-    <BudgetSettings />
-  </MainLayout>
-);
 
 const CategoriesPage = () => (
   <MainLayout>
@@ -173,11 +159,6 @@ const CategoriesPage = () => (
   </MainLayout>
 );
 
-const SettingsPage = () => (
-  <MainLayout>
-    <Settings />
-  </MainLayout>
-);
 
 const AddPage = () => (
   <AddLayout title="Add Transaction" showClose={true}>
