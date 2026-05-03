@@ -158,4 +158,19 @@
   .text-secondary-token { color: #5f5e5a; }
   .text-primary-token { color: #c96442; }
   .text-tertiary-variant { color: #004f50; }
+
+  /* Ring elevation from reference */
+  .ring-elevation {
+    box-shadow: 0 0 0 1px #e8e6dc, 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Donut chart gradient */
+  .donut-gradient {
+    background: conic-gradient(
+      #c96442 0% 45%,
+      #d97a5a 45% 70%,
+      #e8e6dc 70% 85%,
+      #5f5e5a 85% 100%
+    );
+  }
 }
