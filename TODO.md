@@ -119,8 +119,8 @@
 - [x] Test toàn bộ CRUD giao dịch (thêm, sửa, xoá, lọc).
 - [x] Test logic tính toán thống kê (tổng thu/chi, số dư, breakdown).
 - [x] Test cảnh báo budget ở các ngưỡng 0%, 80%, 100%, 120%.
-- [ ] Test LocalStorage: lưu đúng, đọc đúng sau khi reload trang.
-- [ ] Test export CSV: dữ liệu đầy đủ, encoding UTF-8 (tiếng Việt).
+- [x] Test LocalStorage: lưu đúng, đọc đúng sau khi reload trang.
+- [x] Test export CSV: dữ liệu đầy đủ, encoding UTF-8 (tiếng Việt).
 - [ ] Kiểm tra hiệu năng: 1000+ giao dịch, danh sách không bị lag.
 - [ ] Test trên iOS Safari (14+) và Android Chrome (100+).
 - [ ] Test offline: ngắt mạng, app vẫn hoạt động đầy đủ.

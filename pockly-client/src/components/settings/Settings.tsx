@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useTransactionStore } from '@/store/transactionStore';
 import { useCategoryStore } from '@/store/categoryStore';
 import { format } from 'date-fns';
+import { generateCSV, downloadCSV } from '@/lib/export';
 import { exportStorage } from '@/lib/storage';
 
 export const Settings: React.FC = () => {
@@ -34,7 +35,7 @@ export const Settings: React.FC = () => {
       });
 
       // Generate CSV content
-      const csvContent = generateCSV(filteredTransactions);
+      const csvContent = generateCSV(filteredTransactions, categories);
 
       // Download the file
       downloadCSV(csvContent, `pockly-export-${exportStartDate}-to-${exportEndDate}.csv`);
@@ -51,62 +52,6 @@ export const Settings: React.FC = () => {
     } finally {
       setIsExporting(false);
     }
-  };
-
-  const generateCSV = (transactions: any[]) => {
-    const headers = [
-      'Ngày',
-      'Loại',
-      'Số tiền',
-      'Danh mục',
-      'Ghi chú'
-    ];
-
-    const rows = transactions.map(t => {
-      const category = categories.find(c => c.id === t.category);
-      return [
-        format(new Date(t.date), 'yyyy-MM-dd HH:mm:ss'),
-        t.type === 'income' ? 'Thu nhập' : 'Chi tiêu',
-        t.amount.toString(),
-        category ? `${category.icon} ${category.name}` : 'Danh mục không xác định',
-        t.note || ''
-      ];
-    });
-
-    // Combine headers and rows
-    const csvData = [headers, ...rows];
-
-    // Convert to CSV string
-    return csvData.map(row =>
-      row.map(field => {
-        // Escape fields containing commas, quotes, or newlines
-        if (field.includes(',') || field.includes('"') || field.includes('\n')) {
-          return `"${field.replace(/"/g, '""')}"`;
-        }
-        return field;
-      }).join(',')
-    ).join('\n');
-  };
-
-  const downloadCSV = (content: string, filename: string) => {
-    // Create blob with UTF-8 BOM for proper Vietnamese encoding
-    const BOM = '\uFEFF';
-    const blob = new Blob([BOM + content], { type: 'text/csv;charset=utf-8;' });
-
-    // Create download link
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-
-    // Trigger download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Clean up
-    URL.revokeObjectURL(url);
   };
 
   const handleQuickExport = (period: 'month' | '3months' | 'year') => {
