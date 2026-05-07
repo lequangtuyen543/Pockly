@@ -121,9 +121,9 @@
 - [x] Test cảnh báo budget ở các ngưỡng 0%, 80%, 100%, 120%.
 - [x] Test LocalStorage: lưu đúng, đọc đúng sau khi reload trang.
 - [x] Test export CSV: dữ liệu đầy đủ, encoding UTF-8 (tiếng Việt).
-- [ ] Kiểm tra hiệu năng: 1000+ giao dịch, danh sách không bị lag.
+- [x] Kiểm tra hiệu năng: 1000+ giao dịch, danh sách không bị lag.
+- [x] Test offline: ngắt mạng, app vẫn hoạt động đầy đủ.
 - [ ] Test trên iOS Safari (14+) và Android Chrome (100+).
-- [ ] Test offline: ngắt mạng, app vẫn hoạt động đầy đủ.
 - [ ] Lighthouse audit: Performance ≥ 90, Accessibility ≥ 85.
 
 ---
