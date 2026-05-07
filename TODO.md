@@ -123,8 +123,8 @@
 - [x] Test export CSV: dữ liệu đầy đủ, encoding UTF-8 (tiếng Việt).
 - [x] Kiểm tra hiệu năng: 1000+ giao dịch, danh sách không bị lag.
 - [x] Test offline: ngắt mạng, app vẫn hoạt động đầy đủ.
-- [ ] Test trên iOS Safari (14+) và Android Chrome (100+).
-- [ ] Lighthouse audit: Performance ≥ 90, Accessibility ≥ 85.
+- [x] Test trên iOS Safari (14+) và Android Chrome (100+).
+- [x] Lighthouse audit: Performance ≥ 90, Accessibility ≥ 85.
 
 ---
 
