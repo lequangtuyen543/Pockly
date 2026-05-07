@@ -26,15 +26,15 @@ const localStorageMock = (() => {
   };
 })();
 
-Object.defineProperty(global, 'localStorage', { value: localStorageMock });
+Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
 
 // Mocking crypto.randomUUID
-if (!global.crypto) {
+if (!globalThis.crypto) {
   // @ts-ignore
-  global.crypto = {};
+  globalThis.crypto = {};
 }
 // @ts-ignore
-global.crypto.randomUUID = vi.fn(() => 'test-uuid-' + Math.random());
+globalThis.crypto.randomUUID = vi.fn(() => 'test-uuid-' + Math.random());
 
 describe('Core Logic: Transaction CRUD', () => {
   beforeEach(() => {
