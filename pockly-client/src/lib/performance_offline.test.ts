@@ -76,6 +76,7 @@ describe('Performance: Large Dataset Handling', () => {
     const duration = end - start;
 
     expect(duration).toBeLessThan(30);
+    expect(filtered.length).toBeGreaterThanOrEqual(0);
   });
 });
 

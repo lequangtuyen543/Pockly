@@ -129,8 +129,8 @@
 ---
 
 ### 8. **Triển khai & Tài liệu hóa**
-- [ ] Build production: `pnpm run build`, kiểm tra bundle size.
-- [ ] Deploy lên Vercel, cấu hình custom domain (nếu có).
+- [x] Build production: `pnpm run build`, kiểm tra bundle size.
+- [x] Deploy lên Vercel, cấu hình custom domain (nếu có).
 - [ ] Viết `README.md` đầy đủ: giới thiệu, hướng dẫn cài đặt, screenshot.
 - [ ] Viết `CHANGELOG.md` cho v1.0.
 - [ ] Kiểm tra lỗi cuối cùng trên production URL.

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '@/components/layouts/AppLayout';
-import { FullscreenLayout } from '@/components/layouts/FullscreenLayout';
 import { CategoryManager } from '@/components/category/CategoryManager';
 import { Settings } from '@/components/settings/Settings';
 

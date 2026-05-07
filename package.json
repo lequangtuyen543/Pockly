@@ -1,15 +1,15 @@
 {
   "name": "pockly",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@8.8.0",
   "workspaces": [
-    "frontend",
-    "backend"
+    "pockly-client",
+    "pockly-server"
   ],
   "scripts": {
-    "install": "pnpm install",
-    "dev": "pnpm --filter frontend dev",
-    "build": "pnpm -r build",
-    "start": "pnpm --filter backend start"
+    "dev": "pnpm --filter pockly-client dev",
+    "build": "pnpm --filter pockly-client build",
+    "test": "pnpm --filter pockly-client test"
   }
 }
