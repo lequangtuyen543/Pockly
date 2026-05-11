@@ -133,5 +133,5 @@
 - [x] Deploy lên Vercel, cấu hình custom domain (nếu có).
 - [ ] Viết `README.md` đầy đủ: giới thiệu, hướng dẫn cài đặt, screenshot.
 - [ ] Viết `CHANGELOG.md` cho v1.0.
-- [ ] Kiểm tra lỗi cuối cùng trên production URL.
+- [x] Kiểm tra lỗi cuối cùng trên production URL.
 - [ ] Đóng gói và tag release `v1.0.0` trên GitHub.
