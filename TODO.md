@@ -134,4 +134,4 @@
 - [x] Viết `README.md` đầy đủ: giới thiệu, hướng dẫn cài đặt, screenshot.
 - [x] Viết `CHANGELOG.md` cho v1.0.
 - [x] Kiểm tra lỗi cuối cùng trên production URL.
-- [ ] Đóng gói và tag release `v1.0.0` trên GitHub.
+- [x] Đóng gói và tag release `v1.0.0` trên GitHub.
